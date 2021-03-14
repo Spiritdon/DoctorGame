@@ -23,8 +23,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
+
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -46,8 +46,12 @@ public class PlayerMovement : MonoBehaviour
                 if (hit.transform.gameObject.GetComponent<DestressorScript>() != null) {
                     hit.transform.gameObject.GetComponent<DestressorScript>().destress();
                 }
+                if (hit.transform.gameObject.GetComponent<StressorScript>() != null) {
+                    hit.transform.gameObject.GetComponent<StressorScript>().stress();
+                }
             }
         }
+
         if (Input.GetKeyDown(KeyCode.M))
         {
             SceneManager.LoadScene("Minigame1");

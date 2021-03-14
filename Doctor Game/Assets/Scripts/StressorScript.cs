@@ -1,21 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class DestressorScript : MonoBehaviour {
+public class StressorScript : MonoBehaviour {
 
     public GameObject player;
 
-    public void destress() {
+    public void stress() {
 
-        if (distanceToPlayer() < 2.0f) {
-            if (player.GetComponent<PlayerMovement>().stress > 0.0f) {
-                player.GetComponent<PlayerMovement>().stress -= 0.1f;
-                if (player.GetComponent<PlayerMovement>().stress < 0.0f) {
-                    player.GetComponent<PlayerMovement>().stress = 0.0f;
-                }
-            }
-            Debug.Log(player.GetComponent<PlayerMovement>().stress);
+        if (distanceToPlayer() < 3.0f) {
+            SceneManager.LoadScene("Minigame1");
         }
     }
 
