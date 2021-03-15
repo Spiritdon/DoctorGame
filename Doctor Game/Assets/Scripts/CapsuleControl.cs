@@ -16,7 +16,27 @@ public class CapsuleControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += new Vector3((Input.GetAxis("Horizontal")*Time.deltaTime)*10,0,0);
+        if (gameObject.transform.position.x<5&& gameObject.transform.position.x > -5)
+        {
+            transform.position += new Vector3((Input.GetAxis("Horizontal") * Time.deltaTime) * 10, 0, 0);
+            
+        }
+        if (gameObject.transform.position.x >= 5.0f)
+        {
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                transform.position += new Vector3(-3 * Time.deltaTime * 10, 0, 0);
+            }
+        }
+        if (gameObject.transform.position.x <= -5.0f)
+        {
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                transform.position += new Vector3(3 * Time.deltaTime * 10, 0, 0);
+            }
+        }
+
+
         if (Input.GetKeyDown(KeyCode.G))
         {
             SceneManager.LoadScene("mainGameScene");
