@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
         cam = Camera.main;
         agent = GetComponent<NavMeshAgent>();
 
-        stress = 1.0f;
+        stress = 0;
 
         gameObject.transform.position = data.playerPos;
         stress = data.stressLevel;
@@ -29,6 +29,9 @@ public class PlayerMovement : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
+
+        data.playerPos = transform.position;
+        data.stressLevel = stress;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -59,17 +62,23 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            stress += 0.1f;
+            if (stress < 1)
+            {
+                stress += 0.1f;
+                StressBar.stress = stress;
+            }
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            stress -= 0.1f;
+            if (stress > 0)
+            {
+                stress -= 0.1f;
+                StressBar.stress = stress;
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.M))
         {
-            data.playerPos = transform.position;
-            data.stressLevel = stress;
             SceneManager.LoadScene("Minigame1");
         }
     }
