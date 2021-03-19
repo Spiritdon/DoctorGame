@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public ProgressSaver data;
+
     Camera cam;
     NavMeshAgent agent;
     public GameObject dest;
@@ -19,11 +21,17 @@ public class PlayerMovement : MonoBehaviour
         cam = Camera.main;
         agent = GetComponent<NavMeshAgent>();
 
-        stress = 1.0f;
+        stress = 0;
+
+        gameObject.transform.position = data.playerPos;
+        stress = data.stressLevel;
     }
 
     // Update is called once per frame
     void Update() {
+
+        data.playerPos = transform.position;
+        data.stressLevel = stress;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -49,6 +57,23 @@ public class PlayerMovement : MonoBehaviour
                 if (hit.transform.gameObject.GetComponent<StressorScript>() != null) {
                     hit.transform.gameObject.GetComponent<StressorScript>().stress();
                 }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (stress < 1)
+            {
+                stress += 0.1f;
+                StressBar.stress = stress;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (stress > 0)
+            {
+                stress -= 0.1f;
+                StressBar.stress = stress;
             }
         }
 
