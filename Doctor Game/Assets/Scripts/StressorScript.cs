@@ -6,12 +6,11 @@ using UnityEngine.SceneManagement;
 public class StressorScript : MonoBehaviour {
 
     public GameObject player;
-    public GameObject timePanel;
     
     public void stress() {
 
         if (distanceToPlayer() < 3.0f) {
-            timePanel.GetComponent<TimeManager>().UpdateTime(30);
+            TimeObj.UpdateTime(30,false);
             SceneManager.LoadScene("Minigame1");
         }
     }
