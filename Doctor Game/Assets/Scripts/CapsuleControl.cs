@@ -36,15 +36,11 @@ public class CapsuleControl : MonoBehaviour
             }
         }
 
-
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            SceneManager.LoadScene("mainGameScene");
-        }
         if (pointCounter == 5)
         {
-            SceneManager.LoadScene("mainGameScene");
+            SceneManager.LoadScene("MainGame");
             pointCounter = 0;
+            Stats.Stress -= 0.2f;
         }
     }
     private void OnCollisionEnter(Collision collision)
@@ -53,15 +49,14 @@ public class CapsuleControl : MonoBehaviour
         Debug.Log(collision.gameObject.name);
         if (collision.gameObject.tag == "badPill")
         {
-            SceneManager.LoadScene("mainGameScene");
+            SceneManager.LoadScene("MainGame");
+            Stats.Stress += 0.1f;
         }
         if(collision.gameObject.tag == "goodPill")
         {
             pointCounter++;
             Debug.Log("Point Counter:" + pointCounter);
             pillSpawner.CollectPill(collision.gameObject);
-            // GetComponent<PillSpawner>().CollectPill(collision.gameObject);
-            //pillSpawner.CollectPill(collision.gameObject);
         }
     }
 

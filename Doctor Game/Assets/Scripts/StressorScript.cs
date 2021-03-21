@@ -10,7 +10,7 @@ public class StressorScript : MonoBehaviour {
     public void stress() {
 
         if (distanceToPlayer() < 3.0f) {
-            TimeObj.UpdateTime(30,false);
+            Stats.UpdateTime(30,false);
             SceneManager.LoadScene("Minigame1");
         }
     }
