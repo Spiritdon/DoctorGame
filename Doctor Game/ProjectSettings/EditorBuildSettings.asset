@@ -5,13 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/StartMenu.unity
     guid: c93aefa3fd8ac484ca64af6eaf2f4c34
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainGame.unity
     guid: 0a3d0c353d902cb4c82f2804dda895d4
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PillGame.unity
     guid: d92250a643fa6c145917f52d6f75e9b3
+  - enabled: 1
+    path: Assets/Scenes/PaintingMini.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}
