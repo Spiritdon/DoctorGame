@@ -28,41 +28,48 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update() {
-
-        Stats.PlayerPos = transform.position;
-        Stats.Stress = stress;
-
-        if (Input.GetMouseButtonDown(0))
+    void Update()
+    {
+        if (cam.gameObject.activeSelf)
         {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            Stats.PlayerPos = transform.position;
+            Stats.Stress = stress;
 
-            if(Physics.Raycast(ray, out hit))
+            if (Input.GetMouseButtonDown(0))
             {
-                agent.SetDestination(hit.point);
-                dest.transform.position = hit.point;
-            }
-        }
+                Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
 
-        if (Input.GetMouseButtonDown(1)) {
-
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit)) {
-                if (hit.transform.gameObject.GetComponent<DestressorScript>() != null) {
-                    hit.transform.gameObject.GetComponent<DestressorScript>().destress();
-                }
-                if (hit.transform.gameObject.GetComponent<StressorScript>() != null) {
-                    hit.transform.gameObject.GetComponent<StressorScript>().stress();
+                if (Physics.Raycast(ray, out hit))
+                {
+                    agent.SetDestination(hit.point);
+                    dest.transform.position = hit.point;
                 }
             }
-        }
 
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            SceneManager.LoadScene("PillGame");
+            if (Input.GetMouseButtonDown(1))
+            {
+
+                Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit))
+                {
+                    if (hit.transform.gameObject.GetComponent<DestressorScript>() != null)
+                    {
+                        hit.transform.gameObject.GetComponent<DestressorScript>().destress();
+                    }
+                    if (hit.transform.gameObject.GetComponent<StressorScript>() != null)
+                    {
+                        hit.transform.gameObject.GetComponent<StressorScript>().stress();
+                    }
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                SceneManager.LoadScene("PillGame");
+            }
         }
     }
 }
