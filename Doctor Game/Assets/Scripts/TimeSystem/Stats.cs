@@ -115,8 +115,7 @@ public static class Stats
         staminaLabel = GameObject.Find("StaminaLabel");
 
         Min += timeCost;
-
-        hour += Mathf.FloorToInt(timeCost / 60f);
+        
         while (Min >= 30)
         {
             Min -= 30;

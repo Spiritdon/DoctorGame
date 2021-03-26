@@ -13,24 +13,13 @@ public class PromptHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (prompt.gameObject.activeSelf)
-        {
-            Vector2 mousePos = Input.mousePosition;
-            if (mousePos.x >= prompt.rect.xMin && mousePos.x <= prompt.rect.xMax && mousePos.y <= prompt.rect.yMax && mousePos.y >= prompt.rect.yMin && Input.GetMouseButtonDown(1))
-            {
-                HidePrompt();
-                Stats.Stamina -= data.staminaCost;
-                Stats.Stress += data.stressCost;
-                Stats.UpdateTime(data.timeCost, false);
-                SceneManager.LoadScene(targetScene);
-            }
-        }
+
     }
 
     public void CreatePrompt(string staminaCost, string stressCost, string timeCost, string stressBuff, string scene)
@@ -55,12 +44,14 @@ public class PromptHandler : MonoBehaviour
     {
         HidePrompt();
         Stats.Stress += data.stressCost;
-        Stats.UpdateTime(data.timeCost, false);
+        Debug.Log(data.timeCost);
+        Debug.Log(data.timeCost*60);
+        Stats.UpdateTime(data.timeCost * 60, false);
         SceneManager.LoadScene(targetScene);
     }
 }
 
-struct PromptData 
+struct PromptData
 {
     public float stressCost;
     public float staminaCost;
