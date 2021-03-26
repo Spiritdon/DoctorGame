@@ -13,24 +13,13 @@ public class PromptHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (prompt.gameObject.activeSelf)
-        {
-            Vector2 mousePos = Input.mousePosition;
-            if (mousePos.x >= prompt.rect.xMin && mousePos.x <= prompt.rect.xMax && mousePos.y <= prompt.rect.yMax && mousePos.y >= prompt.rect.yMin && Input.GetMouseButtonDown(1))
-            {
-                HidePrompt();
-                Stats.Stamina -= data.staminaCost;
-                Stats.Stress += data.stressCost;
-                Stats.UpdateTime(data.timeCost, false);
-                SceneManager.LoadScene(targetScene);
-            }
-        }
+
     }
 
     public void CreatePrompt(string staminaCost, string stressCost, string timeCost, string stressBuff, string scene)
@@ -40,7 +29,7 @@ public class PromptHandler : MonoBehaviour
         prompt.transform.GetChild(4).GetComponent<Text>().text = "Time: " + timeCost;
         prompt.transform.GetChild(7).GetComponent<Text>().text = "Stress: " + stressBuff;
 
-        data = new PromptData(float.Parse(staminaCost.Substring(1)), float.Parse(stressCost.Substring(1)), float.Parse(timeCost.Substring(1, timeCost.IndexOf('h') - 1)));
+        data = new PromptData(float.Parse(staminaCost.Substring(1)), float.Parse(stressCost.Substring(1)), int.Parse(timeCost.Substring(1, timeCost.IndexOf('h') - 1)));
 
         prompt.gameObject.SetActive(true);
         targetScene = scene;
@@ -55,18 +44,20 @@ public class PromptHandler : MonoBehaviour
     {
         HidePrompt();
         Stats.Stress += data.stressCost;
-        Stats.UpdateTime(data.timeCost, false);
+        Debug.Log(data.timeCost);
+        Debug.Log(data.timeCost*60);
+        Stats.UpdateTime(data.timeCost * 60, false);
         SceneManager.LoadScene(targetScene);
     }
 }
 
-struct PromptData 
+struct PromptData
 {
     public float stressCost;
     public float staminaCost;
-    public float timeCost;
+    public int timeCost;
 
-    public PromptData(float staC, float strC, float tC)
+    public PromptData(float staC, float strC, int tC)
     {
         stressCost = strC;
         staminaCost = staC;

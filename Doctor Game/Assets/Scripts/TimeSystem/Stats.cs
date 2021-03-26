@@ -7,7 +7,7 @@ public static class Stats
 {
     private static int day = 1;
     private static int min = 0;
-    private static int hour = 8;
+    private static float hour = 8;
     private static float stamina = 5;
     private static float outOfStamina = 0;
     private static float stress = 0;
@@ -41,7 +41,7 @@ public static class Stats
         }
     }
 
-    public static int Hour
+    public static float Hour
     {
         get
         {
@@ -115,11 +115,11 @@ public static class Stats
         staminaLabel = GameObject.Find("StaminaLabel");
 
         Min += timeCost;
-
-        hour += Mathf.FloorToInt(timeCost / 60f);
+        
         while (Min >= 30)
         {
             Min -= 30;
+            hour += 0.5f;
 
             if (Min < 0)
             {
@@ -155,7 +155,8 @@ public static class Stats
             Hour = 0;
         }
 
-        timeLabel.GetComponent<Text>().text = "Time" + "\n" + Hour.ToString() + ":" + Min.ToString();
+        
+        timeLabel.GetComponent<Text>().text = "Time" + "\n" + Hour.ToString();
         dayLabel.GetComponent<Text>().text = "Day" + "\n" + Day.ToString();
         if (Stamina <= 0 && OutOfStamina != 0)
         {
@@ -164,66 +165,6 @@ public static class Stats
         else
         {
             staminaLabel.GetComponent<Text>().text = "Stamina" + "\n" +  Stamina.ToString();
-        }
-    }
-
-    public static void UpdateTime(float timeCost, bool isRelaxing)
-    {
-
-        dayLabel = GameObject.Find("DayLabel");
-        timeLabel = GameObject.Find("TimeLabel");
-        staminaLabel = GameObject.Find("StaminaLabel");
-
-        timeCost *= 60;
-
-        Min += (int)timeCost;
-        while (Min >= 60)
-        {
-            Min -= 60;
-            Hour += 1;
-
-            if (Min < 0)
-            {
-                Min = Min * -1;
-            }
-
-            if (!isRelaxing)
-            {
-                if (stamina <= 0)
-                {
-                    OutOfStamina++;
-                    if (OutOfStamina >= 5)
-                    {
-                        hour = 12;
-                        day++;
-                        min = 0;
-                        stamina = 3;
-                        outOfStamina = 0;
-                    }
-                }
-                else
-                {
-                    stamina -= 1;
-                }
-            }
-
-        }
-
-        if (Hour >= 24)
-        {
-            Day += 1;
-            Hour = 0;
-        }
-
-        timeLabel.GetComponent<Text>().text = "Hours Left" + "\n" + Hour.ToString() + ":" + Min.ToString();
-        dayLabel.GetComponent<Text>().text = "Day" + "\n" + Day.ToString();
-        if (Stamina <= 0 && OutOfStamina != 0)
-        {
-            staminaLabel.GetComponent<Text>().text = "Overtime Work Hours" + "\n" + OutOfStamina.ToString();
-        }
-        else
-        {
-            staminaLabel.GetComponent<Text>().text = "Stamina" + "\n" + Stamina.ToString();
         }
     }
 }
