@@ -6,6 +6,6 @@ public class Watering : MonoBehaviour
 {
     public void WateringBttnClicked()
     {
-        Stats.UpdateTime(30,true);
+        Stats.UpdateTime(30, true);
     }
 }
