@@ -29,7 +29,7 @@ public class PromptHandler : MonoBehaviour
         prompt.transform.GetChild(4).GetComponent<Text>().text = "Time: " + timeCost;
         prompt.transform.GetChild(7).GetComponent<Text>().text = "Stress: " + stressBuff;
 
-        data = new PromptData(float.Parse(staminaCost.Substring(1)), float.Parse(stressCost.Substring(1)), int.Parse(timeCost.Substring(1, timeCost.IndexOf('h') - 1)));
+        data = new PromptData(float.Parse(staminaCost.Substring(1)), int.Parse(stressCost.Substring(1)), int.Parse(timeCost.Substring(1, timeCost.IndexOf('h') - 1)));
 
         prompt.gameObject.SetActive(true);
         targetScene = scene;
@@ -53,11 +53,11 @@ public class PromptHandler : MonoBehaviour
 
 struct PromptData
 {
-    public float stressCost;
+    public int stressCost;
     public float staminaCost;
     public int timeCost;
 
-    public PromptData(float staC, float strC, int tC)
+    public PromptData(float staC, int strC, int tC)
     {
         stressCost = strC;
         staminaCost = staC;

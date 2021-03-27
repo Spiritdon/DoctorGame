@@ -20,8 +20,8 @@ public class TimeSetup : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            //Stats.Stamina++;
-            Stats.UpdateTime(82, true);
+            Debug.Log(Stats.Stress);
+            Stats.Stress++;
         }
     }
 }

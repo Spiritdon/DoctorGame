@@ -40,7 +40,7 @@ public class CapsuleControl : MonoBehaviour
         {
             SceneManager.LoadScene("MainGame");
             pointCounter = 0;
-            Stats.Stress -= 0.2f;
+            Stats.Stress -= 2;
         }
     }
     private void OnCollisionEnter(Collision collision)
@@ -50,7 +50,7 @@ public class CapsuleControl : MonoBehaviour
         if (collision.gameObject.tag == "badPill")
         {
             SceneManager.LoadScene("MainGame");
-            Stats.Stress += 0.1f;
+            Stats.Stress += 1;
         }
         if(collision.gameObject.tag == "goodPill")
         {

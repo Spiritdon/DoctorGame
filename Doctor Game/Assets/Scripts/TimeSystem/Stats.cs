@@ -10,7 +10,7 @@ public static class Stats
     private static float hour = 8;
     private static float stamina = 5;
     private static float outOfStamina = 0;
-    private static float stress = 0;
+    private static int stress = 0;
     private static Vector3 playerPos;
 
     private static GameObject dayLabel;
@@ -77,7 +77,7 @@ public static class Stats
         }
     }
 
-    public static float Stress
+    public static int Stress
     {
         get
         {
@@ -85,14 +85,7 @@ public static class Stats
         }
         set
         {
-            if(value >= 0)
-            {
-                stress = value;
-            }
-            else if(value <= 1)
-            {
-                stress = value;
-            }
+            stress = value;
         }
     }
 
@@ -115,7 +108,10 @@ public static class Stats
         staminaLabel = GameObject.Find("StaminaLabel");
 
         Min += timeCost;
-        
+
+        hour += Mathf.FloorToInt(timeCost / 60f);
+
+        //update hours every 30 min
         while (Min >= 30)
         {
             Min -= 30;
@@ -131,7 +127,7 @@ public static class Stats
                 if (stamina <= 0)
                 {
                     OutOfStamina += 0.5f;
-                    
+
                     if (OutOfStamina >= 5) //Pass out
                     {
                         hour = 12;
@@ -149,13 +145,14 @@ public static class Stats
 
         }
 
+        //update days every 24 hours
         if (Hour >= 24)
         {
             Day += 1;
             Hour = 0;
         }
 
-        
+
         timeLabel.GetComponent<Text>().text = "Time" + "\n" + Hour.ToString();
         dayLabel.GetComponent<Text>().text = "Day" + "\n" + Day.ToString();
         if (Stamina <= 0 && OutOfStamina != 0)
@@ -164,7 +161,7 @@ public static class Stats
         }
         else
         {
-            staminaLabel.GetComponent<Text>().text = "Stamina" + "\n" +  Stamina.ToString();
+            staminaLabel.GetComponent<Text>().text = "Stamina" + "\n" + Stamina.ToString();
         }
     }
 }

@@ -21,8 +21,6 @@ public class PlayerMovement : MonoBehaviour
         cam = Camera.main;
         agent = GetComponent<NavMeshAgent>();
 
-        stress = 0;
-
         gameObject.transform.position = Stats.PlayerPos;
         stress = Stats.Stress;
     }
@@ -33,7 +31,6 @@ public class PlayerMovement : MonoBehaviour
         if (cam.gameObject.activeSelf)
         {
             Stats.PlayerPos = transform.position;
-            Stats.Stress = stress;
 
             if (Input.GetMouseButtonDown(0))
             {
