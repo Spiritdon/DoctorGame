@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 enum SurgeryState { Incision, Extraction, Replacement };
 public class SurgeryGameLoop : MonoBehaviour
@@ -21,6 +22,9 @@ public class SurgeryGameLoop : MonoBehaviour
     public GameObject[] organPrefabs;
     public Material healthyMat;
     public Material sickMat;
+    public GameObject winScreen;
+    public GameObject lossScreen;
+    public GameObject canvas;
     
     public SurgeryMouseControl mouseInfo;
 
@@ -50,42 +54,13 @@ public class SurgeryGameLoop : MonoBehaviour
             else if (scalpelClicked)
             {
                 stateTime -= Time.deltaTime;
-                if(mouseInfo.Held != null)
-                {
-
-                }
             }
 
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                for (int i = 0; i < incisionGuideLines.Length; i++)
-                {
-                    float width = Mathf.Abs(incisionGuideLines[i].GetComponent<LineRenderer>().GetPosition(0).x - incisionGuideLines[i].GetComponent<LineRenderer>().GetPosition(1).x);
-                    float height = Mathf.Abs(incisionGuideLines[i].GetComponent<LineRenderer>().GetPosition(0).y - incisionGuideLines[i].GetComponent<LineRenderer>().GetPosition(1).y);
-                    organSpots[i] = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    organSpots[i].transform.localScale = new Vector3(width, height, 0.25f);
-                    Vector3 point = (incisionGuideLines[i].GetComponent<LineRenderer>().GetPosition(0) + incisionGuideLines[i].GetComponent<LineRenderer>().GetPosition(1)) / 2;
-                    point.z = 10f;
-                    organSpots[i].transform.position = point;
-                    MeshRenderer meshRend = Instantiate(organPrefabs[Random.Range(organPrefabs.Length/2, organPrefabs.Length)]).GetComponent<MeshRenderer>();
-                    meshRend.material = sickMat;
-                    meshRend.gameObject.transform.eulerAngles = new Vector3(-90f, 0, 0);
-                    meshRend.gameObject.transform.position = new Vector3(point.x, point.y, point.z - 10);
-                    meshRend.gameObject.transform.localScale = new Vector3(5, 5, 5);
-                    incisionGuideLines[i].SetActive(false);
-                }
+                
 
                 gameState = SurgeryState.Extraction;
-
-                //width = Mathf.Abs(incisionGuideLines[1].GetComponent<LineRenderer>().GetPosition(0).x - incisionGuideLines[1].GetComponent<LineRenderer>().GetPosition(1).x);
-                //height = Mathf.Abs(incisionGuideLines[1].GetComponent<LineRenderer>().GetPosition(0).y - incisionGuideLines[1].GetComponent<LineRenderer>().GetPosition(1).y);
-                //organSpot2.transform.localScale = new Vector3(width, height, 1);
-                //point = (incisionGuideLines[1].GetComponent<LineRenderer>().GetPosition(0) + incisionGuideLines[1].GetComponent<LineRenderer>().GetPosition(1)) / 2;
-                //organSpot2.transform.position = point;
-                //meshRend = Instantiate(organPrefabs[Random.Range(0, organPrefabs.Length)]).GetComponent<MeshRenderer>();
-                //meshRend.material = sickMat;
-                //meshRend.gameObject.transform.eulerAngles = new Vector3(-90f, 0, 0);
-                //meshRend.gameObject.transform.position = point;
             }
 
             if (stateTime <= 0)
@@ -125,6 +100,7 @@ public class SurgeryGameLoop : MonoBehaviour
                 }
             }
         }
+        UpdateUI();
     }
 
     IEnumerator SurgeryBotched()
@@ -139,9 +115,9 @@ public class SurgeryGameLoop : MonoBehaviour
         SceneManager.LoadScene("MainGame");
     }
 
-    void GenerateIncisionMarker(int index, float xMinMax = 6f, float yMinMax = 3f)
+    void GenerateIncisionMarker(int index, float xMinMax = 6f, float yMax = 2f, float yMin = -3f)
     {
-        Vector3 point1 = new Vector3(Random.Range(-xMinMax, xMinMax), Random.Range(-yMinMax, yMinMax), 0);
+        Vector3 point1 = new Vector3(Random.Range(-xMinMax, xMinMax), Random.Range(yMin, yMax), 0);
         Vector3 point2 = Vector3.zero;
         switch (Random.Range(0, 3)) 
         {
@@ -185,6 +161,41 @@ public class SurgeryGameLoop : MonoBehaviour
         if (targetCollider.Distance(mouseInfo.Held.GetComponent<Collider2D>()).distance > 1)
         {
             SurgeryBotched();
+        }
+    }
+
+    void UpdateUI()
+    {
+        Text[] display = canvas.GetComponentsInChildren<Text>();
+        display[0].text = stateTime.ToString("0.0");
+        display[1].text = gameState.ToString();
+    }
+
+    void EnterStage(int stage)
+    {
+        switch (stage)
+        {
+            case 0:
+                for (int i = 0; i < incisionGuideLines.Length; i++)
+                {
+                    float width = Mathf.Abs(incisionGuideLines[i].GetComponent<LineRenderer>().GetPosition(0).x - incisionGuideLines[i].GetComponent<LineRenderer>().GetPosition(1).x);
+                    float height = Mathf.Abs(incisionGuideLines[i].GetComponent<LineRenderer>().GetPosition(0).y - incisionGuideLines[i].GetComponent<LineRenderer>().GetPosition(1).y);
+                    organSpots[i] = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    organSpots[i].transform.localScale = new Vector3(width, height, 0.25f);
+                    Vector3 point = (incisionGuideLines[i].GetComponent<LineRenderer>().GetPosition(0) + incisionGuideLines[i].GetComponent<LineRenderer>().GetPosition(1)) / 2;
+                    point.z = 10f;
+                    organSpots[i].transform.position = point;
+                    MeshRenderer meshRend = Instantiate(organPrefabs[Random.Range(organPrefabs.Length / 2, organPrefabs.Length)]).GetComponent<MeshRenderer>();
+                    meshRend.material = sickMat;
+                    meshRend.gameObject.transform.eulerAngles = new Vector3(-90f, 0, 0);
+                    meshRend.gameObject.transform.position = new Vector3(point.x, point.y, point.z - 10);
+                    meshRend.gameObject.transform.localScale = new Vector3(5, 5, 5);
+                    incisionGuideLines[i].SetActive(false);
+                }
+                break;
+
+            case 1:
+                break;
         }
     }
 }

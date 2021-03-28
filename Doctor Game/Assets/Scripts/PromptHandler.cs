@@ -47,7 +47,10 @@ public class PromptHandler : MonoBehaviour
         Debug.Log(data.timeCost);
         Debug.Log(data.timeCost*60);
         Stats.UpdateTime(data.timeCost * 60, false);
-        SceneManager.LoadScene(targetScene);
+        if (targetScene != "")
+        {
+            SceneManager.LoadScene(targetScene);
+        }
         gameObject.SetActive(false);
         gameObject.transform.parent.gameObject.GetComponent<StressorScript>().active = false;
     }
