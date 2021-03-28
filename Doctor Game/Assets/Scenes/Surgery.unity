@@ -700,6 +700,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heldSeekSpeed: 5
+  lines: []
+  line: {fileID: 8405186811537603569, guid: 05f2e3ec30f64414793c3ef3c1520680, type: 3}
 --- !u!4 &1853221352
 Transform:
   m_ObjectHideFlags: 0
