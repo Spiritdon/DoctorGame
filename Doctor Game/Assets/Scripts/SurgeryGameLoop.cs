@@ -45,6 +45,10 @@ public class SurgeryGameLoop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (mouseInfo.Held !=null && Input.GetMouseButton(1))
+        {
+            TrackIncision();
+        }
         if(gameState == SurgeryState.Incision)
         {
             if (mouseInfo.Held != null && !scalpelClicked)
@@ -146,11 +150,74 @@ public class SurgeryGameLoop : MonoBehaviour
 
     void TrackIncision()
     {
+        
         //figure out which guideline the player is attempting to make an incision on
-        Vector3 startPoint = mouseInfo.Held.transform.position;
+        //Vector3 startPoint = mouseInfo.Held.transform.position;
         EdgeCollider2D targetCollider = incisionGuideLines[0].GetComponent<EdgeCollider2D>();
+        Vector3 heldPos = mouseInfo.Held.transform.position;
+        bool hasPlayerCutYet = false;
 
-        float minDist = incisionGuideLines[0].GetComponent<EdgeCollider2D>().Distance(mouseInfo.Held.GetComponent<Collider2D>()).distance;
+        foreach (GameObject incision in incisionGuideLines)
+        {
+            if (Input.GetMouseButton(1) && incision.GetComponent<EdgeCollider2D>().bounds.Contains(heldPos))
+            {
+                Debug.Log("Right Click Down and Inside");
+                //sorry tried to get both the box and the circle collider to determine if the player won did not work out
+                /*foreach (GameObject line in mouseInfo.lines)
+                {
+                    Vector3[] scapleCutPostions = new Vector3[line.GetComponent<LineRenderer>().positionCount];
+                    line.GetComponent<LineRenderer>().GetPositions(scapleCutPostions);
+
+                    foreach (Vector3 scapleCut in scapleCutPostions)
+                    {
+                        bool circleHit = false;
+                        bool boxHit = false;
+                        if (incision.GetComponent<CircleCollider2D>().bounds.Contains(scapleCut))
+                        {
+                            //Debug.Log("Circle Hit");
+                            circleHit = true;
+                        }
+                        if (incision.GetComponent<BoxCollider2D>().bounds.Contains(scapleCut))
+                        {
+                            //Debug.Log("Box Hit");
+                            boxHit = true;
+                        }
+                        if (boxHit ==true && circleHit == true)
+                        {
+                            Debug.Log("You Won :D");
+                        }
+                    }
+                }*/
+            }
+            else
+            {
+                Debug.Log("You are either outside of the incision or you let go of right click");
+            }
+        }
+        
+        /*if (incisionGuideLines[0].GetComponent<EdgeCollider2D>().bounds.Contains(heldPos))
+        {
+            //Debug.Log("First: Held is within");
+        }
+        if (incisionGuideLines[1].GetComponent<EdgeCollider2D>().bounds.Contains(heldPos))
+        {
+            //Debug.Log("Second: Held is within");
+        }
+        foreach(GameObject line in mouseInfo.lines)
+        {
+            Vector3[] scapleCutPostions = new Vector3[line.GetComponent<LineRenderer>().positionCount];
+            line.GetComponent<LineRenderer>().GetPositions(scapleCutPostions);
+
+            foreach (Vector3 scapleCut in scapleCutPostions)
+            {
+                if (incisionGuideLines[0].GetComponent<CircleCollider2D>().bounds.Contains(scapleCut))
+                {
+
+                }
+            }
+        }*/
+
+        /*float minDist = incisionGuideLines[0].GetComponent<EdgeCollider2D>().Distance(mouseInfo.Held.GetComponent<Collider2D>()).distance;
         if(minDist > incisionGuideLines[1].GetComponent<EdgeCollider2D>().Distance(mouseInfo.Held.GetComponent<Collider2D>()).distance)
         {
             targetCollider = incisionGuideLines[1].GetComponent<EdgeCollider2D>();
@@ -160,8 +227,9 @@ public class SurgeryGameLoop : MonoBehaviour
 
         if (targetCollider.Distance(mouseInfo.Held.GetComponent<Collider2D>()).distance > 1)
         {
-            SurgeryBotched();
-        }
+            Debug.Log("Surgery Botched");
+            //SurgeryBotched();
+        }*/
     }
 
     void UpdateUI()

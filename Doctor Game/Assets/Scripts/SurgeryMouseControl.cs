@@ -107,7 +107,7 @@ public class SurgeryMouseControl : MonoBehaviour
     private void CreatingLine()
     {
         test1++;
-        Debug.Log("Create Line Trigger:" + test1);
+        //Debug.Log("Create Line Trigger:" + test1);
 
         GameObject lineInstance = Instantiate(line);
         lines.Add(lineInstance);
@@ -121,7 +121,7 @@ public class SurgeryMouseControl : MonoBehaviour
     private void AddNewPoint(Vector2 _lastPoint)
     {
         test2++;
-        Debug.Log("Create Points:" + test2);
+        //Debug.Log("Create Points:" + test2);
         lineRenderer.positionCount++;
         int positionIndex = lineRenderer.positionCount - 1;
         lineRenderer.SetPosition(positionIndex, _lastPoint);
