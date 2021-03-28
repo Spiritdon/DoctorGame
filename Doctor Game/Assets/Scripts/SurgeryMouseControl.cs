@@ -7,8 +7,25 @@ public class SurgeryMouseControl : MonoBehaviour
     GameObject held = null;
     Camera cam;
     Vector3 prevMousePos;
+    Vector3 mousePos;
     Vector3 center;
     public float heldSeekSpeed = 5;
+
+    public GameObject Held
+    {
+        get
+        {
+            return held;
+        }
+    }
+
+    public Vector3 MousePos
+    {
+        get
+        {
+            return mousePos;
+        }
+    }
 
     // Start is called before the first frame update
     void Awake()
@@ -19,6 +36,7 @@ public class SurgeryMouseControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        mousePos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
         if (Input.GetMouseButtonDown(0) && held == null)
         {
             RaycastHit hit;
@@ -33,6 +51,7 @@ public class SurgeryMouseControl : MonoBehaviour
         {
             held = null;
         }
+
         UpdateHeldPos();
 
         prevMousePos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
@@ -40,8 +59,9 @@ public class SurgeryMouseControl : MonoBehaviour
 
     void UpdateHeldPos()
     {
-        if (held != null) {
-            Vector3 mousePos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
+        if (held != null)
+        {
+            mousePos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
 
             Vector3 centerToMouse = mousePos - center;
             //if (mouseVelocity.sqrMagnitude < 1)
@@ -49,8 +69,8 @@ public class SurgeryMouseControl : MonoBehaviour
             //else
             //mouseVelocity.Normalize();
 
-            Vector3 heldPos = mousePos + centerToMouse/5 * (held.transform.position - center).magnitude/2;
-            
+            Vector3 heldPos = mousePos + centerToMouse / 5 * (held.transform.position - center).magnitude / 2;
+
             //held.GetComponent<Rigidbody>().AddForce(forceDir * heldSeekSpeed);
             held.transform.position = heldPos;
         }
