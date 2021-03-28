@@ -62,7 +62,7 @@ struct PromptData
     public float staminaCost;
     public float timeCost;
 
-    public PromptData(float staC, int strC, int tC)
+    public PromptData(float staC, int strC, float tC)
     {
         stressCost = strC;
         staminaCost = staC;
