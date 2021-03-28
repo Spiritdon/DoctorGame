@@ -700,6 +700,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heldSeekSpeed: 5
+  lines: []
+  line: {fileID: 1941807374202714546, guid: 05f2e3ec30f64414793c3ef3c1520680, type: 3}
 --- !u!4 &1853221352
 Transform:
   m_ObjectHideFlags: 0
@@ -727,6 +729,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   incisionLinePrefab: {fileID: 5180069300412158807, guid: d90c37e347181334392519c89896324b, type: 3}
+<<<<<<< Updated upstream
   organPrefabs:
   - {fileID: 7992639124937906512, guid: fe2a75cebcbb2f742b93695735d369cf, type: 3}
   - {fileID: 8474326268150219746, guid: b0bc71499f1e9294781bcd4f98586a90, type: 3}
@@ -739,6 +742,9 @@ MonoBehaviour:
   healthyMat: {fileID: 2100000, guid: 20290708f4b61b94da7be72c8f957196, type: 2}
   sickMat: {fileID: 2100000, guid: 1e4387aec1e62f34695d7b129db22811, type: 2}
   mouseInfo: {fileID: 1853221351}
+=======
+  incisionLines: []
+>>>>>>> Stashed changes
 --- !u!1 &1956361031
 GameObject:
   m_ObjectHideFlags: 0
