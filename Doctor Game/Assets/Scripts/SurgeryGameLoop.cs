@@ -18,15 +18,11 @@ public class SurgeryGameLoop : MonoBehaviour
     GameObject[] organSpots;
 
     public GameObject incisionLinePrefab;
-<<<<<<< Updated upstream
     public GameObject[] organPrefabs;
     public Material healthyMat;
     public Material sickMat;
     
     public SurgeryMouseControl mouseInfo;
-=======
-    public GameObject[] incisionLines;//needs to be used in surgerymousecontrol
->>>>>>> Stashed changes
 
     // Start is called before the first frame update
     void Start()
