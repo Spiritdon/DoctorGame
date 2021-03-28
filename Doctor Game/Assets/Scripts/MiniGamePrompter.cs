@@ -22,6 +22,7 @@ public class MiniGamePrompter : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            Debug.Log("Triggering");
             prompter.CreatePrompt(staminaCost, stressCost, timeCost, stressBuff, targetScene);
         }
     }

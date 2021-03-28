@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.M))
             {
-                SceneManager.LoadScene("PillGame");
+                SceneManager.LoadScene("PaintingMini");
             }
         }
     }

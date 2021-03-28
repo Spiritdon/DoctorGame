@@ -10,7 +10,7 @@ public class DestressorScript : MonoBehaviour {
 
         if (distanceToPlayer() < 2.0f) {
             if (player.GetComponent<PlayerMovement>().stress > 0.0f) {
-                player.GetComponent<PlayerMovement>().stress -= 0.1f;
+                player.GetComponent<PlayerMovement>().stress -= 1.0f;
                 if (player.GetComponent<PlayerMovement>().stress < 0.0f) {
                     player.GetComponent<PlayerMovement>().stress = 0.0f;
                 }

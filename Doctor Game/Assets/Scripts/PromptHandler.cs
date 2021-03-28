@@ -52,7 +52,10 @@ public class PromptHandler : MonoBehaviour
             SceneManager.LoadScene(targetScene);
         }
         gameObject.SetActive(false);
-        gameObject.transform.parent.gameObject.GetComponent<StressorScript>().active = false;
+
+        if (gameObject.transform.parent.gameObject.GetComponent<StressorScript>() != null) {
+            gameObject.transform.parent.gameObject.GetComponent<StressorScript>().active = false;
+        }
     }
 }
 
