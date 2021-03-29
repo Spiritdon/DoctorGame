@@ -106,6 +106,8 @@ public class SurgeryMouseControl : MonoBehaviour
 
                     lastPoint = heldPosition;
                 }
+
+                
             }
 
             mousePos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
