@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PillSpawner : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class PillSpawner : MonoBehaviour
     public GameObject badPill;
     public GameObject goodPill;
     public List<GameObject> pills;
+
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +19,8 @@ public class PillSpawner : MonoBehaviour
         badPill.name = "bad";
         goodPill.name = "good";
         InvokeRepeating("SpawnPill", 1, 1);
+        Vector3 gravSpeed = new Vector3(0,-200,0);
+        Physics.gravity = gravSpeed;
     }
 
     // Update is called once per frame
@@ -34,7 +39,7 @@ public class PillSpawner : MonoBehaviour
         {
             pillObject = goodPill;
         }
-        GameObject pillGameObject = Instantiate(pillObject, new Vector3(Random.Range(-4, 6), 10, -8), Quaternion.identity);
+        GameObject pillGameObject = Instantiate(pillObject, new Vector3(Random.Range(660, 1276), 756, -45), Quaternion.identity);
         pillGameObject.SetActive(true);
         pills.Add(pillGameObject);
         pillObject = null;
@@ -56,12 +61,12 @@ public class PillSpawner : MonoBehaviour
     public void CollectPill(GameObject pill)
     {
         GameObject[] temp = pills.ToArray();
-        foreach (GameObject goodpill in temp)
+        foreach (GameObject goodBadPill in temp)
         {
-            if (goodpill.name == pill.name && pill.activeSelf == false)
+            if (goodBadPill.name == pill.name && pill.activeSelf == false)
             {
-                var clonePill = goodpill;
-                pills.Remove(goodpill);
+                var clonePill = goodBadPill;
+                pills.Remove(goodBadPill);
                 Destroy(clonePill);
             }
             break;

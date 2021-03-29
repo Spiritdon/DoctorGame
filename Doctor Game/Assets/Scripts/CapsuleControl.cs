@@ -2,41 +2,54 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CapsuleControl : MonoBehaviour
 {
     private int pointCounter;
+    private int badCounter;
     public PillSpawner pillSpawner;
+    public AudioSource pillCollect;
+
+    public Text goodPillCounter;
+    public Text badPillCounter;
+
     // Start is called before the first frame update
     void Start()
     {
         pointCounter = 0;
+        badCounter = 0;
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameObject.transform.position.x<5&& gameObject.transform.position.x > -5)
+        goodPillCounter.text = "Number Of Pill Collected:  " + pointCounter.ToString()+"/10";
+        badPillCounter.text = "Number Of Bad Pill Collected:  " + badCounter.ToString()+"/3";
+        Debug.Log("Point Counter:" + pointCounter);
+        
+        if (gameObject.transform.position.x<1276&& gameObject.transform.position.x > 660)
         {
-            transform.position += new Vector3((Input.GetAxis("Horizontal") * Time.deltaTime) * 10, 0, 0);
+            transform.position += new Vector3((Input.GetAxis("Horizontal") * Time.deltaTime) * 500, 0, 0);
             
         }
-        if (gameObject.transform.position.x >= 5.0f)
+        if (gameObject.transform.position.x >= 1276)
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
-                transform.position += new Vector3(-3 * Time.deltaTime * 10, 0, 0);
+                transform.position += new Vector3(-3 * Time.deltaTime * 500, 0, 0);
             }
         }
-        if (gameObject.transform.position.x <= -5.0f)
+        if (gameObject.transform.position.x <= 660)
         {
             if (Input.GetKeyDown(KeyCode.D))
             {
-                transform.position += new Vector3(3 * Time.deltaTime * 10, 0, 0);
+                transform.position += new Vector3(3 * Time.deltaTime * 500, 0, 0);
             }
         }
 
-        if (pointCounter == 5)
+        if (pointCounter == 10)
         {
             SceneManager.LoadScene("MainGame");
             pointCounter = 0;
@@ -49,14 +62,22 @@ public class CapsuleControl : MonoBehaviour
         Debug.Log(collision.gameObject.name);
         if (collision.gameObject.tag == "badPill")
         {
-            SceneManager.LoadScene("MainGame");
-            Stats.Stress += 1;
+            pillCollect.Play();
+            badCounter++;
+            pillSpawner.CollectPill(collision.gameObject);
         }
         if(collision.gameObject.tag == "goodPill")
         {
+            pillCollect.Play();
             pointCounter++;
-            Debug.Log("Point Counter:" + pointCounter);
+            
             pillSpawner.CollectPill(collision.gameObject);
+            
+        }
+        if (badCounter == 3)
+        {
+            SceneManager.LoadScene("MainGame");
+            Stats.Stress += 1;
         }
     }
 
