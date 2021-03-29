@@ -172,7 +172,7 @@ public class SurgeryGameLoop : MonoBehaviour
 
     void TrackIncision()
     {
-        
+
         //figure out which guideline the player is attempting to make an incision on
         //Vector3 startPoint = mouseInfo.Held.transform.position;
         EdgeCollider2D targetCollider = incisionGuideLines[0].GetComponent<EdgeCollider2D>();
@@ -239,7 +239,7 @@ public class SurgeryGameLoop : MonoBehaviour
             }
         }*/
 
-        /*float minDist = incisionGuideLines[0].GetComponent<EdgeCollider2D>().Distance(mouseInfo.Held.GetComponent<Collider2D>()).distance;
+        float minDist = incisionGuideLines[0].GetComponent<EdgeCollider2D>().Distance(mouseInfo.Held.GetComponent<Collider2D>()).distance;
         if(minDist > incisionGuideLines[1].GetComponent<EdgeCollider2D>().Distance(mouseInfo.Held.GetComponent<Collider2D>()).distance)
         {
             targetCollider = incisionGuideLines[1].GetComponent<EdgeCollider2D>();
@@ -251,6 +251,7 @@ public class SurgeryGameLoop : MonoBehaviour
         {
             StartCoroutine(SurgeryBotched());
         }
+        
     }
 
     void UpdateUI()
