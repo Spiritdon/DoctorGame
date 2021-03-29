@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class PaintManager : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -25,6 +25,9 @@ public class PaintManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.U)){
+            SceneManager.LoadScene("MainGame");
+        }
         if (Input.GetKeyDown(KeyCode.Alpha0))//eraser white
         {
             selectedColorTool = Color.white;
