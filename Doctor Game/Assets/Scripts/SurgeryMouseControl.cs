@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SurgeryMouseControl : MonoBehaviour
 {
-    GameObject held = null;
+    public GameObject held;
     Camera cam;
     Vector3 prevMousePos;
     Vector3 mousePos;
@@ -16,11 +16,22 @@ public class SurgeryMouseControl : MonoBehaviour
     Vector2 lastPoint;
     public List<GameObject> lines;
     public GameObject line;
+    public GameObject cursor;
+    bool canDraw = true;
+
+    public bool CanDraw
+    {
+        set
+        {
+            canDraw = value;
+        }
+    }
 
     private void Start()
     {
         test1 = 0;
         test2 = 0;
+        Cursor.visible = false;
     }
 
     public GameObject Held
@@ -49,19 +60,24 @@ public class SurgeryMouseControl : MonoBehaviour
     void Update()
     {
         mousePos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
-        if (Input.GetMouseButtonDown(0) && held == null)
+        if (Input.GetMouseButtonDown(0))
         {
-            RaycastHit hit;
-
-            if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit))
+            if (held.transform.childCount <= 0)
             {
-                held = hit.transform.gameObject;
-                center = hit.transform.position;
+                //center = held.transform.position;
+
+                RaycastHit hit;
+
+                if (Physics.Raycast(cam.transform.position, held.transform.position - cam.transform.position, out hit))
+                {
+                    hit.transform.parent = held.transform;
+                }
             }
-        }
-        else if(Input.GetMouseButtonDown(0))
-        {
-            held = null;
+            else
+            {
+                held.transform.GetChild(0).parent = null;
+                //center = held.transform.position;
+            }
         }
 
         UpdateHeldPos();
@@ -73,36 +89,47 @@ public class SurgeryMouseControl : MonoBehaviour
     {
         if (held != null)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse1))
+            if (canDraw)
             {
-                CreatingLine();
-            }
-
-            Vector2 heldPosition = held.transform.position;
-            if (heldPosition != lastPoint)
-            {
-                if (Input.GetKey(KeyCode.Mouse1))
+                if (Input.GetKeyDown(KeyCode.Mouse1))
                 {
-                    AddNewPoint(heldPosition);
+                    CreatingLine();
                 }
 
-                lastPoint = heldPosition;
+                Vector2 heldPosition = held.transform.position;
+                if (heldPosition != lastPoint)
+                {
+                    if (Input.GetKey(KeyCode.Mouse1))
+                    {
+                        AddNewPoint(heldPosition);
+                    }
+
+                    lastPoint = heldPosition;
+                }
             }
 
             mousePos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
 
             Vector3 centerToMouse = mousePos - center;
-            //if (mouseVelocity.sqrMagnitude < 1)
-            ///    mouseVelocity = Vector3.zero;
-            //else
-            //mouseVelocity.Normalize();
 
             Vector3 heldPos = mousePos + centerToMouse / 5 * (held.transform.position - center).magnitude / 2;
+            heldPos = new Vector3(Mathf.Clamp(heldPos.x, -10f, 10f), Mathf.Clamp(heldPos.y, -4.75f, 2.5f), heldPos.z);
 
-            //held.GetComponent<Rigidbody>().AddForce(forceDir * heldSeekSpeed);
             held.transform.position = heldPos;
         }
     }
+
+    public void DropHeldAt(Vector3 pos)
+    {
+        if (held.transform.childCount > 0)
+        {
+            GameObject heldItem = held.transform.GetChild(0).gameObject;
+            heldItem.transform.parent = null;
+            held.transform.parent = null;
+        }
+
+    }
+
     //Line Creation
     private void CreatingLine()
     {
