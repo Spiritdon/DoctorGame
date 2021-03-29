@@ -10,7 +10,6 @@ public class SurgeryGameLoop : MonoBehaviour
     SurgeryState gameState;
 
     float stateTime = 10f;
-    bool scalpelClicked = false;
     bool gameOver = false;
 
     GameObject[] incisionGuideLines;

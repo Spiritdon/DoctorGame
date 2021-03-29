@@ -5,9 +5,9 @@ using UnityEngine;
 public class StressBar : MonoBehaviour
 {
     public RectTransform bar;
-    // Start is called before the first frame update
     void Start()
     {
+        bar.localScale = new Vector3(Stats.Stress / 10f, 1, 1);
     }
 
     // Update is called once per frame

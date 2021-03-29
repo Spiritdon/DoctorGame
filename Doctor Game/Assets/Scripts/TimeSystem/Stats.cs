@@ -11,6 +11,7 @@ public static class Stats
     private static float stamina = 5;
     private static float outOfStamina = 0;
     private static float stress = 0;
+    private static float stressReleaseLimit = 0;
     private static Vector3 playerPos;
 
     private static GameObject dayLabel;
@@ -76,6 +77,17 @@ public static class Stats
             outOfStamina = value;
         }
     }
+    public static float StressReleaseLimit
+    {
+        get
+        {
+            return stressReleaseLimit;
+        }
+        set
+        {
+            stressReleaseLimit = value;
+        }
+    }
 
     public static float Stress
     {
@@ -85,7 +97,11 @@ public static class Stats
         }
         set
         {
-            if (value >= 0)
+            if (value < 0)
+            {
+                stress = 0;
+            }
+            else
             {
                 stress = value;
             }
@@ -145,6 +161,10 @@ public static class Stats
                     stamina -= 0.5f;
                 }
             }
+            else if(isRelaxing && outOfStamina <=0)
+            {
+                stamina += 0.5f;
+            }
 
         }
 
@@ -152,7 +172,10 @@ public static class Stats
         if (Hour >= 24)
         {
             Day += 1;
-            Hour = 0;
+            Hour = 8;
+            stressReleaseLimit = 0;
+            stamina = 5;
+            outOfStamina = 0;
         }
 
 

@@ -11,18 +11,14 @@ public class StressorScript : MonoBehaviour {
 
     [HideInInspector]
     public bool active;
-
     private int counter;
-
-    private float health;
 
     void Start() {
 
         active = false;
         counter = 0;
         trigger.SetActive(false);
-
-        health = 100.0f;
+        
     }
 
     void FixedUpdate() {
