@@ -29,7 +29,7 @@ public class StressorScript : MonoBehaviour {
 
         if (!active) {
             counter++;
-            int rand = Random.Range(0, 2000000);
+            int rand = Random.Range(0, 1000000);
             if (rand < counter) {
                 counter = 0;
                 active = true;

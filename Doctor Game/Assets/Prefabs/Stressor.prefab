@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   staminaCost: -1
-  stressCost: +10
+  stressCost: +1
   timeCost: -1hr
-  stressBuff: -30
+  stressBuff: -3
   targetScene: PillGame
 --- !u!65 &352837874
 BoxCollider:
@@ -139,7 +139,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f28a45644f98c774a9d03e0e7dd7732c, type: 2}
+  - {fileID: 2100000, guid: 4c698ab99bf0ed4439a612cb7253e465, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
