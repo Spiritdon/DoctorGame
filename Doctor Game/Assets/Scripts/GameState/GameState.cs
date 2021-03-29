@@ -28,6 +28,7 @@ public class GameState : MonoBehaviour
     {
         if (Stats.Stress > 10)
         {
+            Stats.Stress = 0;
             currentState = State.badEnding;
         }
 
