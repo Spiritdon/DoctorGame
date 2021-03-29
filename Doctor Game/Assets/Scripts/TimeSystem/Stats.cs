@@ -10,7 +10,7 @@ public static class Stats
     private static float hour = 8;
     private static float stamina = 5;
     private static float outOfStamina = 0;
-    private static int stress = 0;
+    private static float stress = 0;
     private static Vector3 playerPos;
 
     private static GameObject dayLabel;
@@ -77,7 +77,7 @@ public static class Stats
         }
     }
 
-    public static int Stress
+    public static float Stress
     {
         get
         {
@@ -85,7 +85,10 @@ public static class Stats
         }
         set
         {
-            stress = value;
+            if (value >= 0)
+            {
+                stress = value;
+            }
         }
     }
 

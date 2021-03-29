@@ -9,7 +9,7 @@ public class SurgeryGameLoop : MonoBehaviour
 {
     SurgeryState gameState;
 
-    float stateTime = 30f;
+    float stateTime = 10f;
     bool scalpelClicked = false;
     bool gameOver = false;
 
@@ -31,6 +31,7 @@ public class SurgeryGameLoop : MonoBehaviour
     public GameObject bg;
     public GameObject tray;
     public Collider2D organTray;
+    public Collider2D gameBounds;
 
     public SurgeryMouseControl mouseInfo;
 
@@ -53,45 +54,49 @@ public class SurgeryGameLoop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gameState == SurgeryState.Incision)
+        stateTime -= Time.deltaTime;
+        if (gameState == SurgeryState.Incision)
         {
-            stateTime -= Time.deltaTime;
-
             //if (Input.GetKeyUp(KeyCode.Mouse1))
             //{
             //    //CheckIncision(mouseInfo.lines[lineCount].GetComponent<LineRenderer>());
             //    //lineCount++;
             //}
-
+            if (Input.GetKeyUp(KeyCode.Mouse1))
+            {
+                lineCount++;
+            }
             if (Input.GetKey(KeyCode.Mouse1))
             {
                 TrackIncision();
             }
 
-            if (stateTime <= 0 || Input.GetKeyDown(KeyCode.Q))
+            if (stateTime <= 0 || lineCount >= 2)
             {
                 gameState = SurgeryState.Extraction;
                 EnterState(0);
                 stateTime = 30f;
                 mouseInfo.CanDraw = false;
+                mouseInfo.DeleteLines();
             }
         }
         else if(gameState == SurgeryState.Extraction)
         {
-            stateTime -= Time.deltaTime;
-
-            if (stateTime <= 0 || Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                
-
                 if (organTray.bounds.Contains(oldOrgans[0].transform.position)
-                    && organTray.bounds.Contains(oldOrgans[1].transform.position))
+                        && organTray.bounds.Contains(oldOrgans[1].transform.position))
                 {
                     EnterState(1);
                     gameState = SurgeryState.Replacement;
                     stateTime = 30f;
                 }
-                else
+            }
+
+            if (stateTime <= 0)
+            {
+                if (!organTray.bounds.Contains(oldOrgans[0].transform.position)
+                    || !organTray.bounds.Contains(oldOrgans[1].transform.position))
                 {
                     StartCoroutine(SurgeryBotched());
                     gameOver = true;
@@ -100,19 +105,22 @@ public class SurgeryGameLoop : MonoBehaviour
         }
         else if(gameState == SurgeryState.Replacement)
         {
-            stateTime -= Time.deltaTime;
+            if ((organSpots[0].transform.GetChild(0).GetComponent<Collider2D>().bounds.Contains(newOrgans[0].transform.position)
+                    && organSpots[1].transform.GetChild(0).GetComponent<Collider2D>().bounds.Contains(newOrgans[1].transform.position))
+                    || (organSpots[1].transform.GetChild(0).GetComponent<Collider2D>().bounds.Contains(newOrgans[0].transform.position)
+                    && organSpots[0].transform.GetChild(0).GetComponent<Collider2D>().bounds.Contains(newOrgans[1].transform.position))
+                    && Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                StartCoroutine(SurgerySuccesful());
+                gameOver = true;
+            }
 
             if (stateTime <= 0)
             {
-                if ((organSpots[0].GetComponent<Collider2D>().bounds.Contains(newOrgans[0].transform.position)
-                    && organSpots[1].GetComponent<Collider2D>().bounds.Contains(newOrgans[1].transform.position))
-                    || (organSpots[1].GetComponent<Collider2D>().bounds.Contains(newOrgans[0].transform.position)
-                    && organSpots[0].GetComponent<Collider2D>().bounds.Contains(newOrgans[1].transform.position)))
-                {
-                    StartCoroutine(SurgerySuccesful());
-                    gameOver = true;
-                }
-                else
+                if ((!organSpots[0].transform.GetChild(0).GetComponent<Collider2D>().bounds.Contains(newOrgans[0].transform.position)
+                    || !organSpots[1].transform.GetChild(0).GetComponent<Collider2D>().bounds.Contains(newOrgans[1].transform.position))
+                    && (!organSpots[1].transform.GetChild(0).GetComponent<Collider2D>().bounds.Contains(newOrgans[0].transform.position)
+                    || !organSpots[0].transform.GetChild(0).GetComponent<Collider2D>().bounds.Contains(newOrgans[1].transform.position)))
                 {
                     StartCoroutine(SurgeryBotched());
                     gameOver = true;
@@ -128,12 +136,16 @@ public class SurgeryGameLoop : MonoBehaviour
     IEnumerator SurgeryBotched()
     {
         bg.transform.position = new Vector3(0,0,5);
+        incisionGuideLines[0].SetActive(false);
+        incisionGuideLines[1].SetActive(false);
         for(int i = 0; i < 6; i++)
         {
             canvas.transform.GetChild(i).gameObject.SetActive(false);
         }
         canvas.transform.GetChild(6).gameObject.SetActive(true);
+        mouseInfo.DeleteLines();
         yield return new WaitForSeconds(3);
+        Cursor.visible = true;
         SceneManager.LoadScene("MainGame");
     }
 
@@ -146,19 +158,21 @@ public class SurgeryGameLoop : MonoBehaviour
         }
         canvas.transform.GetChild(7).gameObject.SetActive(true);
         yield return new WaitForSeconds(3);
+        Cursor.visible = true;
+        Stats.Stress -= 3.5f;
         SceneManager.LoadScene("MainGame");
     }
 
     void GenerateIncisionMarker(int index, float xMinMax = 6f, float yMax = 2f, float yMin = -3f)
     {
         Vector3 point1 = organTray.bounds.center;
-        while (organTray.bounds.Contains(point1))
+        while (organTray.bounds.Contains(point1) || !gameBounds.bounds.Contains(point1))
         {
             point1 = new Vector3(Random.Range(-xMinMax, xMinMax), Random.Range(yMin, yMax), 0);
         }
         
         Vector3 point2 = organTray.bounds.center;
-        while (organTray.bounds.Contains(point2))
+        while (organTray.bounds.Contains(point2) || !gameBounds.bounds.Contains(point2))
         {
             switch (Random.Range(0, 3))
             {
@@ -336,7 +350,7 @@ public class SurgeryGameLoop : MonoBehaviour
                     float height = Mathf.Abs(incisionGuideLines[i].GetComponent<LineRenderer>().GetPosition(0).y - incisionGuideLines[i].GetComponent<LineRenderer>().GetPosition(1).y);
                     organSpots[i] = Instantiate(organSpotPrefab);
                     organSpots[i].transform.localScale = new Vector3(width, height, 0.25f);
-                    organSpots[i].GetComponent<BoxCollider2D>().size = new Vector3(width, height, 0.25f);
+                    organSpots[i].transform.GetChild(0).GetComponent<BoxCollider2D>().size = new Vector3(width, height, 0.25f);
                     Vector3 point = (incisionGuideLines[i].GetComponent<LineRenderer>().GetPosition(0) + incisionGuideLines[i].GetComponent<LineRenderer>().GetPosition(1)) / 2;
                     point.z = 10f;
                     organSpots[i].transform.position = point;

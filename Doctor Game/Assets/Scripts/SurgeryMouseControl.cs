@@ -155,4 +155,12 @@ public class SurgeryMouseControl : MonoBehaviour
         int positionIndex = lineRenderer.positionCount - 1;
         lineRenderer.SetPosition(positionIndex, _lastPoint);
     }
+
+    public void DeleteLines()
+    {
+        foreach(GameObject line in lines)
+        {
+            line.SetActive(false);
+        }
+    }
 }
