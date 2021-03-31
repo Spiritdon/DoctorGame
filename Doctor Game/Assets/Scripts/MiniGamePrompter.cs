@@ -12,6 +12,7 @@ public class MiniGamePrompter : MonoBehaviour
     public string stressBuff;
     public string targetScene;
     public bool isRelaxing;
+    public GameObject stressObj;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +25,7 @@ public class MiniGamePrompter : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             Debug.Log("Triggering");
-            prompter.CreatePrompt(staminaCost, stressCost, timeCost, isRelaxing, stressBuff, targetScene);
+            prompter.CreatePrompt(staminaCost, stressCost, timeCost, isRelaxing, stressBuff, targetScene, stressObj);
         }
     }
 

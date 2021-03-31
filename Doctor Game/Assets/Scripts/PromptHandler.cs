@@ -10,14 +10,14 @@ public class PromptHandler : MonoBehaviour
     string targetScene;
     PromptData data;
 
-    public void CreatePrompt(string staminaCost, string stressCost, string timeCost, bool isRelaxing, string stressBuff, string scene)
+    public void CreatePrompt(string staminaCost, string stressCost, string timeCost, bool isRelaxing, string stressBuff, string scene, GameObject obj)
     {
         prompt.transform.GetChild(2).GetComponent<Text>().text = "Stamina: " + staminaCost;
         prompt.transform.GetChild(3).GetComponent<Text>().text = "Stress: " + stressCost;
         prompt.transform.GetChild(4).GetComponent<Text>().text = "Time: " + timeCost;
         prompt.transform.GetChild(7).GetComponent<Text>().text = "Stress: " + stressBuff;
 
-        data = new PromptData(float.Parse(staminaCost.Substring(1)), int.Parse(stressCost.Substring(1)), float.Parse(timeCost.Substring(1, timeCost.IndexOf('h') - 1)), isRelaxing);
+        data = new PromptData(float.Parse(staminaCost.Substring(1)), int.Parse(stressCost.Substring(1)), float.Parse(timeCost.Substring(1, timeCost.IndexOf('h') - 1)), isRelaxing, obj);
 
         prompt.gameObject.SetActive(true);
         targetScene = scene;
@@ -51,9 +51,9 @@ public class PromptHandler : MonoBehaviour
         }
         gameObject.SetActive(false);
 
-        if (gameObject.transform.parent.gameObject.GetComponent<StressorScript>() != null)
+        if (data.stressor.GetComponent<StressorScript>())
         {
-            gameObject.transform.parent.gameObject.GetComponent<StressorScript>().active = false;
+            data.stressor.GetComponent<StressorScript>().active = false;
         }
     }
 }
@@ -64,12 +64,18 @@ struct PromptData
     public float staminaCost;
     public float timeCost;
     public bool isRelaxing;
+    public GameObject stressor;
 
-    public PromptData(float staC, int strC, float tC, bool tf)
+    public PromptData(float staC, int strC, float tC, bool tf, GameObject stressObj)
     {
         stressCost = strC;
         staminaCost = staC;
         timeCost = tC;
         isRelaxing = tf;
+        stressor = stressObj;
     }
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes
