@@ -50,6 +50,7 @@ MonoBehaviour:
   timeCost: -1hr
   stressBuff: -3
   targetScene: PillGame
+  isRelaxing: 0
 --- !u!65 &352837874
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -237,6 +238,7 @@ MonoBehaviour:
   player: {fileID: 0}
   trigger: {fileID: 352837871}
   pointer: {fileID: 554792930}
+  patientModel: {fileID: 2785077014938490268}
   active: 0
 --- !u!1001 &2826419222115303029
 PrefabInstance:
@@ -310,5 +312,10 @@ PrefabInstance:
 --- !u!4 &5168907417705991311 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6954350193340576506, guid: 912336809aa347a40a6a50bbc86ca402, type: 3}
+  m_PrefabInstance: {fileID: 2826419222115303029}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2785077014938490268 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 117060075524664297, guid: 912336809aa347a40a6a50bbc86ca402, type: 3}
   m_PrefabInstance: {fileID: 2826419222115303029}
   m_PrefabAsset: {fileID: 0}

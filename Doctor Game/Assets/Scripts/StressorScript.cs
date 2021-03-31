@@ -8,6 +8,7 @@ public class StressorScript : MonoBehaviour {
     public GameObject player;
     public GameObject trigger;
     public GameObject pointer;
+    public GameObject patientModel;
 
     [HideInInspector]
     public bool active;
@@ -42,6 +43,8 @@ public class StressorScript : MonoBehaviour {
             player.transform.position.y,
             player.transform.position.z)
             - DirectionToPlayer();
+
+        patientModel.SetActive(active);
     }
     
     public void stress() {
