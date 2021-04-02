@@ -17,13 +17,16 @@ public class FlowerZoom : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CamToggle();
+        if (InRange())
+        {
+            CamToggle();
+        }
     }
 
     public void CamToggle()
     {
 
-        if (DistanceToPlayer() < 3.0f && !exit)
+        if (!exit)
         {
             mainCam.SetActive(false);
             flowerCam.SetActive(true);
@@ -35,6 +38,11 @@ public class FlowerZoom : MonoBehaviour
             mainCam.SetActive(true);
             flowerPanel.SetActive(false);
         }
+    }
+
+    public bool InRange()
+    {
+        return gameObject.GetComponent<Collider>().bounds.Contains(player.transform.position);
     }
 
     public float DistanceToPlayer()
@@ -49,5 +57,6 @@ public class FlowerZoom : MonoBehaviour
     public void ExitBttnClicked()
     {
         exit = true;
+        CamToggle();
     }   
 }

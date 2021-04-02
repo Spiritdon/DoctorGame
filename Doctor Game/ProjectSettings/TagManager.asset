@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Prompter
+  - goodPill
+  - badPill
+  - TV
   layers:
   - Default
   - TransparentFX

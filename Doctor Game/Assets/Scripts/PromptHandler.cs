@@ -45,11 +45,15 @@ public class PromptHandler : MonoBehaviour
         }
 
         Stats.UpdateTime((int)(data.timeCost * 60), data.isRelaxing);
-        if (targetScene != "")
+        if (targetScene != "" && targetScene != "TV")
         {
             SceneManager.LoadScene(targetScene);
         }
-        gameObject.SetActive(false);
+        if (targetScene == "TV")
+        {
+            GameObject.FindGameObjectWithTag("TV").GetComponent<TVHandler>().Activate();
+        }
+        transform.GetChild(0).gameObject.SetActive(false);
 
         if (data.stressor.GetComponent<StressorScript>())
         {
@@ -74,8 +78,5 @@ struct PromptData
         isRelaxing = tf;
         stressor = stressObj;
     }
-<<<<<<< Updated upstream
 }
-=======
-}
->>>>>>> Stashed changes
+

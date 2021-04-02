@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public static class Stats
 {
+    private static bool playedOnce;
     private static int day = 1;
     private static int min = 0;
     private static float hour = 8;
@@ -13,6 +14,8 @@ public static class Stats
     private static float stress = 0;
     private static float stressReleaseLimit = 0;
     private static Vector3 playerPos;
+    private static int wentHomeStressed;
+    private static int noVariety;
 
     private static GameObject dayLabel;
     private static GameObject timeLabel;
@@ -27,6 +30,17 @@ public static class Stats
         set
         {
             day = value;
+        }
+    }
+    public static bool PlayedOnce
+    {
+        get
+        {
+            return playedOnce;
+        }
+        set
+        {
+            playedOnce = value;
         }
     }
 
