@@ -7,6 +7,5 @@ public class ImgScale : MonoBehaviour
     public void ChangeScale(Vector3 inputVector)
     {
         this.GetComponent<RectTransform>().localScale = inputVector;
-        Debug.Log(this.transform.localScale);
     }
 }

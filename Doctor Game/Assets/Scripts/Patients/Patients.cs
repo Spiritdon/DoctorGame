@@ -20,20 +20,25 @@ public class Patients : MonoBehaviour
         {
             cDay = 1;
             healthBar = Resources.Load("HealthBarCanvas") as GameObject;
-            Instantiate(healthBar, new Vector3(patientGameObject.transform.position.x, patientGameObject.transform.position.y + 10, patientGameObject.transform.position.z + 1.5f), Quaternion.identity);
-            healthBar.GetComponentInChildren<HealthBar>().SetHealth(health);
+            healthBar = Instantiate(healthBar, new Vector3(patientGameObject.transform.position.x, patientGameObject.transform.position.y + 10, patientGameObject.transform.position.z + 1.5f), Quaternion.identity);
         }
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (Stats.Day != cDay)
         {
             cDay++;
             health--;
 
-            healthBar.GetComponentInChildren<HealthBar>().SetHealth(health);
+            if (health == 0)
+            {
+                Destroy(this.gameObject);
+            }
         }
+
+        healthBar.GetComponentInChildren<HealthBar>().SetHealth(health);
     }
 }

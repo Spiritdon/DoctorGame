@@ -44,7 +44,10 @@ public class HealthBar : MonoBehaviour
                     img.ChangeScale(new Vector3(0.2f, 1, 1));
                     break;
                 case 1:
-                    img.ChangeScale(new Vector3(0, 1, 1));
+                    img.ChangeScale(new Vector3(0.1f, 1, 1));
+                    break;
+                case 0:
+                    Destroy(this.gameObject);
                     break;
             }
         }
