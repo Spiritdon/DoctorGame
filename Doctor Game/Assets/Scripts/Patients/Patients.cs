@@ -19,15 +19,10 @@ public class Patients : MonoBehaviour
         else
         {
             cDay = 1;
-            healthBar = Resources.Load("HealthBar") as GameObject;
-            Instantiate(healthBar, patientGameObject.transform, false);
+            healthBar = Resources.Load("HealthBarCanvas") as GameObject;
+            Instantiate(healthBar, new Vector3(patientGameObject.transform.position.x, patientGameObject.transform.position.y + 10, patientGameObject.transform.position.z + 1.5f), Quaternion.identity);
+            healthBar.GetComponentInChildren<HealthBar>().SetHealth(health);
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
     }
 
     // Update is called once per frame
@@ -37,9 +32,8 @@ public class Patients : MonoBehaviour
         {
             cDay++;
             health--;
-            healthBar.GetComponentInChildren<Transform>().localScale =
-                new Vector3(healthBar.transform.localScale.x - 0.2f, 1, 1);
-            Debug.Log(healthBar.GetComponentInChildren<Transform>().localScale);
+
+            healthBar.GetComponentInChildren<HealthBar>().SetHealth(health);
         }
     }
 }
