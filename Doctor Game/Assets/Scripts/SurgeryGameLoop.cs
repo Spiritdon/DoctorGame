@@ -34,15 +34,19 @@ public class SurgeryGameLoop : MonoBehaviour
 
     public SurgeryMouseControl mouseInfo;
 
-    private bool oneCompleteIncision;
+    private bool oneCompleteIncision;//because there are only 2 incsisions if we find the player has completed one the next one will always be at index zero
     private int incCompleted;//number of incinsion completed max 2
 
-    Vector3 IncisionPosition1;
-    Vector3 IncisionPosition2;
+    
+    //bool to check which incision is complete
+    bool firstIncCompleted;
+    bool secondIncCompleted;
 
     // Start is called before the first frame update
     void Start()
     {
+        firstIncCompleted = false;
+        secondIncCompleted = false;
         incCompleted = 0;
         oneCompleteIncision = false;// if thep layer has completed an incision
         oldOrgans = new GameObject[2];
@@ -60,7 +64,7 @@ public class SurgeryGameLoop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(incCompleted);
+        //Debug.Log(incCompleted);
         stateTime -= Time.deltaTime;
         if (gameState == SurgeryState.Incision)
         {
@@ -203,102 +207,19 @@ public class SurgeryGameLoop : MonoBehaviour
         }
 
         incisionGuideLines[index] = Instantiate(incisionLinePrefab);
-        IncisionPosition1 = point1;
-        IncisionPosition2 = point2;
         incisionGuideLines[index].GetComponent<LineRenderer>().SetPositions(new Vector3[] { point1, point2 });
         incisionGuideLines[index].GetComponent<EdgeCollider2D>().SetPoints(new List<Vector2> { new Vector2(point1.x, point1.y), new Vector2(point2.x, point2.y) });
     }
 
-    //void CheckIncision(LineRenderer incision)
-    //{
-    //
-    //    //figure out which guideline the player is attempting to make an incision on
-    //    Vector3 startPoint = incision.GetPosition(0);
-    //    EdgeCollider2D targetCollider = incisionGuideLines[0].GetComponent<EdgeCollider2D>();
-    //    //Vector3 heldPos = mouseInfo.Held.transform.position;
-    //    bool aCollider = false;
-    //    bool bCollider = false;
-    //
-    //    float minDist = incisionGuideLines[0].GetComponent<EdgeCollider2D>().Distance(mouseInfo.Held.GetComponent<Collider2D>()).distance;
-    //    if (minDist > incisionGuideLines[1].GetComponent<EdgeCollider2D>().Distance(mouseInfo.Held.GetComponent<Collider2D>()).distance)
-    //    {
-    //        targetCollider = incisionGuideLines[1].GetComponent<EdgeCollider2D>();
-    //    }
-    //
-    //    //foreach (GameObject incision in incisionGuideLines)
-    //    //{
-    //    //    if (Input.GetMouseButton(1) && incision.GetComponent<EdgeCollider2D>().bounds.Contains(heldPos))
-    //    //    {
-    //    //        Debug.Log("Right Click Down and Inside");
-    //    //        //sorry tried to get both the box and the circle collider to determine if the player won did not work out
-    //    //        /*foreach (GameObject line in mouseInfo.lines)
-    //    //        {
-    //    //            Vector3[] scapleCutPostions = new Vector3[line.GetComponent<LineRenderer>().positionCount];
-    //    //            line.GetComponent<LineRenderer>().GetPositions(scapleCutPostions);
-    //    //
-    //    //            foreach (Vector3 scapleCut in scapleCutPostions)
-    //    //            {
-    //    //                bool circleHit = false;
-    //    //                bool boxHit = false;
-    //    //                if (incision.GetComponent<CircleCollider2D>().bounds.Contains(scapleCut))
-    //    //                {
-    //    //                    //Debug.Log("Circle Hit");
-    //    //                    circleHit = true;
-    //    //                }
-    //    //                if (incision.GetComponent<BoxCollider2D>().bounds.Contains(scapleCut))
-    //    //                {
-    //    //                    //Debug.Log("Box Hit");
-    //    //                    boxHit = true;
-    //    //                }
-    //    //                if (boxHit ==true && circleHit == true)
-    //    //                {
-    //    //                    Debug.Log("You Won :D");
-    //    //                }
-    //    //            }
-    //    //        }*/
-    //    //    }
-    //    //    else
-    //    //    {
-    //    //        Debug.Log("You are either outside of the incision or you let go of right click");
-    //    //    }
-    //    //}
-    //    
-    //    //Make sure the player does not get too far from the guid line
-    //    if (targetCollider.Distance(mouseInfo.Held.GetComponent<EdgeCollider2D>()).distance > 0.5f)
-    //    {
-    //        StartCoroutine(SurgeryBotched());
-    //    }
-    //
-    //    Vector3[] scapleCutPostions = new Vector3[targetCollider.gameObject.GetComponent<LineRenderer>().positionCount];
-    //    targetCollider.GetComponent<LineRenderer>().GetPositions(scapleCutPostions);
-    //
-    //    foreach (Vector3 scapleCut in scapleCutPostions)
-    //    {
-    //        if (targetCollider.GetComponent<CircleCollider2D>().bounds.Contains(scapleCut) && !aCollider)
-    //        {
-    //            aCollider = true;
-    //        }
-    //        if (targetCollider.GetComponent<BoxCollider2D>().bounds.Contains(scapleCut) && !bCollider)
-    //        {
-    //            bCollider = true;
-    //        }
-    //        if (targetCollider.Distance(mouseInfo.Held.GetComponent<EdgeCollider2D>()).distance > 0.5f)
-    //        {
-    //            StartCoroutine(SurgeryBotched());
-    //        }
-    //    }
-    //
-    //    if(aCollider && bCollider)
-    //    {
-    //
-    //    }
-    //}
+    
 
     void TrackIncision()
     {
+        //this bool is for determining if the player has drawn any lines 
         bool noLinesDrawn = true;
+        //game object for the chosen line
         GameObject chosenLine = new GameObject();
-        Vector3 currPoint;
+        //componets needed for determining all aspects of the target incision
         EdgeCollider2D targetCollider;
         LineRenderer targetLine;
         GameObject targetObj;
@@ -309,19 +230,19 @@ public class SurgeryGameLoop : MonoBehaviour
         if (oneCompleteIncision)
         {
             tempIncisions.Add(incisionGuideLines[0]);
-            currPoint = mouseInfo.Held.transform.position;
             targetCollider = incisionGuideLines[0].GetComponent<EdgeCollider2D>();
             targetLine = incisionGuideLines[0].GetComponent<LineRenderer>();
             targetObj = incisionGuideLines[0];
+            targetObj.name = "Inc0";
         }
         else
         {
             tempIncisions.Add(incisionGuideLines[0]);
             tempIncisions.Add(incisionGuideLines[1]);
-            currPoint = mouseInfo.Held.transform.position;
             targetCollider = incisionGuideLines[0].GetComponent<EdgeCollider2D>();
             targetLine = incisionGuideLines[0].GetComponent<LineRenderer>();
             targetObj = incisionGuideLines[0];
+            targetObj.name = "Inc0";
 
             float minDist = incisionGuideLines[0].GetComponent<EdgeCollider2D>().Distance(mouseInfo.Held.GetComponent<Collider2D>()).distance;
             if (minDist > incisionGuideLines[1].GetComponent<EdgeCollider2D>().Distance(mouseInfo.Held.GetComponent<Collider2D>()).distance)
@@ -329,68 +250,42 @@ public class SurgeryGameLoop : MonoBehaviour
                 targetCollider = incisionGuideLines[1].GetComponent<EdgeCollider2D>();
                 targetLine = incisionGuideLines[1].GetComponent<LineRenderer>();
                 targetObj = incisionGuideLines[1];
+                targetObj.name = "Inc1";
             }
+            
         }
 
-        
-        //Debug.Log("Right Click Down and Inside");
-        
+
+        //if the player has attempted to cut outside of the incision guid lines it will end the game
+        if (Input.GetMouseButton(1))
+        {
+            if (!targetCollider.bounds.Contains(mouseInfo.Held.transform.position))
+            {
+                StartCoroutine(SurgeryBotched());
+            }
+        }
+        //we determine if lines have been drawn if there are none do nothing
         if (mouseInfo.lines.Count == 0)
         {
 
         }
-        else 
+        else//if a line has been drawn set nolinedrawn to false as we now need to compare the currentline with the guildline incision
         {
-            if (targetCollider.bounds.Contains(mouseInfo.lines[mouseInfo.lines.Count - 1].GetComponent<LineRenderer>().GetPosition(0)))
-            {
-                noLinesDrawn = false;
-                chosenLine = mouseInfo.lines[mouseInfo.lines.Count - 1];//the chosen line will always be the current line the chosen line must be within the the bounds
-                //chosenLine = mouseInfo.lines[0];
-            }
+            noLinesDrawn = false;
+            chosenLine = mouseInfo.lines[mouseInfo.lines.Count - 1];//the chosen line will always be the current line the chosen line must be within the the bounds
         }
 
         if (!noLinesDrawn)//determines if lines are drawn to prevent null exceptions
         {
-            /*for (int x = 0; x < mouseInfo.lines.Count; x++)
-            {
-                GameObject tempLine = mouseInfo.lines[x];
-                if (targetCollider.bounds.Contains(tempLine.GetComponent<LineRenderer>().GetPosition(0)))
-                {
-
-                    for (int y = 0;y<pastChosen.Count;y++)
-                    {
-                        if (tempLine == pastChosen[y])
-                        {
-                            x++;
-                            continue;
-                        }
-                        else
-                        {
-                            pastChosen.Add(tempLine);
-                            chosenLine = tempLine;
-                            break;
-                        }
-                    }
-                }
-            }*/
-
-
-            /*foreach (GameObject line in mouseInfo.lines)
-            {
-                line.GetComponent<LineRenderer>();
-                if (targetCollider.bounds.Contains(line.GetComponent<LineRenderer>().GetPosition(0)))
-                {
-                    chosenLine = line;
-                }
-            }*/
-
+            
+            //we get the first and the last position of the chosen
             int lastPosition = chosenLine.GetComponent<LineRenderer>().positionCount - 1;
 
             Vector3 firstPoint = chosenLine.GetComponent<LineRenderer>().GetPosition(0);
             Vector3 lastPoint = chosenLine.GetComponent<LineRenderer>().GetPosition(lastPosition);
             float distanceOfChosen = Vector3.Distance(firstPoint, lastPoint);
 
-
+            //we get the first and the last position of the targetIncisions
             int lastIncisionPosition = targetLine.GetComponent<LineRenderer>().positionCount - 1;
 
             Vector3 incisionFirstPoint = targetLine.GetComponent<LineRenderer>().GetPosition(0);
@@ -399,69 +294,38 @@ public class SurgeryGameLoop : MonoBehaviour
 
             float modifiedDistance = distanceOfTarget - 0.5f;
 
-            //Debug.Log(distanceOfChosen);
-
-            //than we are going to check if every point is within the the bounds if not the player loses
-            /*for (int x = 0; x < chosenLine.GetComponent<LineRenderer>().positionCount; x++)//this is possibly going to be expensive
-            {
-                Vector3[] chosenPoints = new Vector3[10];
-                chosenLine.GetComponent<LineRenderer>().GetPositions(chosenPoints);
-                if (!targetCollider.bounds.Contains(chosenPoints[x]))
-                {
-                    StartCoroutine(SurgeryBotched());
-                    gameOver = true;
-                }
-            }*/
+            //we muse continue to check if the player is out of bounds
             if (!targetCollider.bounds.Contains(mouseInfo.Held.transform.position))
             {
                 StartCoroutine(SurgeryBotched());
                 gameOver = true;
             }
+            //if the players incision is of adequate length and still within the bounds than need to determine which incision is that target and set its color to clear
             if (modifiedDistance <= distanceOfChosen)
             {
-                //incCompleted++;
-
-                //onces a incision is completed it will delete it along with all the incisions the uses mad up until that point leaving only the last incision
-                //Debug.Log("Victory");
                 
-                //once all thel ines are removed we must remove the incision as well to prevent confusion 
-                //first i will create a temp list that will be a copy of the incisionGuideLines array
                 
-                //than we determine what is the target object and remove it
-                if (targetObj = incisionGuideLines[0])
+                //than we determine what is the target object and change its color to be clear
+                if (targetObj == incisionGuideLines[0] && !firstIncCompleted)
                 {
-                    Destroy(incisionGuideLines[0]);
-                    tempIncisions.Remove(incisionGuideLines[0]);
+                    
+                    incisionGuideLines[0].GetComponent<LineRenderer>().endColor = Color.clear;
+                    incisionGuideLines[0].GetComponent<LineRenderer>().startColor = Color.clear;
                     incCompleted++;
+                    firstIncCompleted = true;
                 }
-                else if(targetObj = incisionGuideLines[1])
+                else if(targetObj == incisionGuideLines[1] && !secondIncCompleted)
                 {
-                    Destroy(incisionGuideLines[1]);
-                    tempIncisions.Remove(incisionGuideLines[1]);
-                    incCompleted++;
-                }
-                /*for (int x = 0;x<mouseInfo.lines.Count;x++)
-                {
-                    mouseInfo.lines.Remove(mouseInfo.lines[x]);
-                    Destroy(mouseInfo.lines[x]);
-                }*/
-                /*foreach (GameObject line in mouseInfo.lines)
-                {
-                    Destroy(line);
-                    mouseInfo.lines.Remove(line);
-                }*/
-                //we than update our old array with the new shorter list
-                incisionGuideLines = tempIncisions.ToArray();
 
-                //and than we destroy the object
-               
-                oneCompleteIncision = true;//there are only 2 incisions 
-                
-                //we need to destory the current target*/
+                    incisionGuideLines[1].GetComponent<LineRenderer>().endColor = Color.clear;
+                    incisionGuideLines[1].GetComponent<LineRenderer>().startColor = Color.clear;
+                    incCompleted++;
+                    secondIncCompleted = true;
+                }
             }
 
 
-        }
+        }//if no lines are drawn do nothing
         else
         {
 
