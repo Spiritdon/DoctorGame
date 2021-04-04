@@ -27,6 +27,7 @@ public class PaintManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.U)){
             SceneManager.LoadScene("MainGame");
+            Stats.DestressUsed("Painting");
         }
         if (Input.GetKeyDown(KeyCode.Alpha0))//eraser white
         {

@@ -15,7 +15,8 @@ public static class Stats
     private static float stressReleaseLimit = 0;
     private static Vector3 playerPos;
     private static int wentHomeStressed;
-    private static int noVariety;
+    private static int variety;
+    private static string[] dailyVariety = new string[3];
 
     private static GameObject dayLabel;
     private static GameObject timeLabel;
@@ -41,6 +42,49 @@ public static class Stats
         set
         {
             playedOnce = value;
+        }
+    }
+
+    public static void DestressUsed(string str)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (str == dailyVariety[i])
+            {
+                return;
+            }
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            if ("" == dailyVariety[i])
+            {
+                dailyVariety[i] = str;
+            }
+        }
+    }
+
+    public static int WentHomeStressed
+    {
+        get
+        {
+            return wentHomeStressed;
+        }
+        set
+        {
+            wentHomeStressed = value;
+        }
+    }
+
+    public static int Variety
+    {
+        get
+        {
+            return variety;
+        }
+        set
+        {
+            variety = value;
         }
     }
 
@@ -190,6 +234,13 @@ public static class Stats
             stressReleaseLimit = 0;
             stamina = 5;
             outOfStamina = 0;
+            for (int i = 0; i < 3; i++) {
+                if(dailyVariety[i] != "")
+                {
+                    variety++;
+                }
+                dailyVariety[i] = "";
+            }
         }
 
 

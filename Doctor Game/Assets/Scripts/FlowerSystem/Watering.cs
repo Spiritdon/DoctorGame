@@ -12,5 +12,6 @@ public class Watering : MonoBehaviour
             Stats.Stress -= 0.5f;
         }
         Stats.UpdateTime(30, true);
+        Stats.DestressUsed("Flower");
     }
 }

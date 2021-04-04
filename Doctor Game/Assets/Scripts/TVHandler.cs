@@ -30,6 +30,7 @@ public class TVHandler : MonoBehaviour
         player.SetActive(false);
         mainCam.SetActive(false);
         TVCam.SetActive(true);
+        Stats.DestressUsed("TV");
     }
 
     public void Deactivate()

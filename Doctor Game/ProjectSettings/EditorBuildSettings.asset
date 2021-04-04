@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EndingScenes/GoodEnding.unity
     guid: 6a77712bb33f4da47b49b0d5499fec14
+  - enabled: 1
+    path: Assets/Scenes/EndGameInfo.unity
+    guid: 34b740594041143449d378239a156d83
   m_configObjects: {}

@@ -2,18 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
+using UnityEngine.SceneManagement;
 
 public class VideoControl : MonoBehaviour
 {
     public VideoPlayer video;
     public GameObject panel;
 
+    float timeBuffer = 0.5f;
+
     // Update is called once per frame
     void Update()
     {
-        if (!video.isPlaying)
+        timeBuffer -= Time.deltaTime;
+        if (!video.isPlaying && timeBuffer <= 0)
         {
-            panel.SetActive(true);
+            SceneManager.LoadScene("EndGameInfo");
         }
         else
         {

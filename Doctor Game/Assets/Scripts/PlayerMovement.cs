@@ -63,9 +63,9 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.M))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                SceneManager.LoadScene("PaintingMini");
+                SceneManager.LoadScene("StartMenu");
             }
         }
     }

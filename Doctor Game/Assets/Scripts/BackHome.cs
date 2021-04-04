@@ -32,5 +32,9 @@ public class BackHome : MonoBehaviour
         Stats.Stamina = 5;
         Stats.OutOfStamina = 0;
         Stats.UpdateTime(0, true);
+        if(Stats.Stress >= 7)
+        {
+            Stats.WentHomeStressed++;
+        }
     }
 }
