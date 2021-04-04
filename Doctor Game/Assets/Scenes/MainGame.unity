@@ -1181,9 +1181,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 748247696}
     - target: {fileID: 5460431057764878215, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
-      propertyPath: patientModel
+      propertyPath: pillModel
       value: 
       objectReference: {fileID: 680996264}
+    - target: {fileID: 5460431057764878215, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
+      propertyPath: patientModel
+      value: 
+      objectReference: {fileID: 1864316398}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
 --- !u!4 &319481879 stripped
@@ -3607,9 +3611,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 748247696}
     - target: {fileID: 5460431057764878215, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
-      propertyPath: patientModel
+      propertyPath: pillModel
       value: 
       objectReference: {fileID: 1786666776}
+    - target: {fileID: 5460431057764878215, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
+      propertyPath: patientModel
+      value: 
+      objectReference: {fileID: 1106425589}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
 --- !u!4 &568595625 stripped
@@ -6397,9 +6405,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 748247696}
     - target: {fileID: 5460431057764878215, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
-      propertyPath: patientModel
+      propertyPath: pillModel
       value: 
       objectReference: {fileID: 1703088166}
+    - target: {fileID: 5460431057764878215, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
+      propertyPath: patientModel
+      value: 
+      objectReference: {fileID: 1681047643}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
 --- !u!4 &883728975 stripped
@@ -6739,9 +6751,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 748247696}
     - target: {fileID: 5460431057764878215, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
-      propertyPath: patientModel
+      propertyPath: pillModel
       value: 
       objectReference: {fileID: 1477444325}
+    - target: {fileID: 5460431057764878215, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
+      propertyPath: patientModel
+      value: 
+      objectReference: {fileID: 1169968204}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
 --- !u!4 &926105177 stripped
@@ -13027,9 +13043,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 748247696}
     - target: {fileID: 5460431057764878215, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
-      propertyPath: patientModel
+      propertyPath: pillModel
       value: 
       objectReference: {fileID: 1423598703}
+    - target: {fileID: 5460431057764878215, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
+      propertyPath: patientModel
+      value: 
+      objectReference: {fileID: 1721436803}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
 --- !u!4 &1792643572 stripped
@@ -14281,9 +14301,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 748247696}
     - target: {fileID: 5460431057764878215, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
-      propertyPath: patientModel
+      propertyPath: pillModel
       value: 
       objectReference: {fileID: 1985520316}
+    - target: {fileID: 5460431057764878215, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
+      propertyPath: patientModel
+      value: 
+      objectReference: {fileID: 1477996689}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
 --- !u!4 &1992839045 stripped
@@ -16116,9 +16140,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 748247696}
     - target: {fileID: 5460431057764878215, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
-      propertyPath: patientModel
+      propertyPath: pillModel
       value: 
       objectReference: {fileID: 1853888310}
+    - target: {fileID: 5460431057764878215, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
+      propertyPath: patientModel
+      value: 
+      objectReference: {fileID: 1203313130}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
 --- !u!23 &5609131966111124707

@@ -3,55 +3,71 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StressorScript : MonoBehaviour {
+public class StressorScript : MonoBehaviour
+{
 
     public GameObject player;
     public GameObject trigger;
     public GameObject pointer;
+    public GameObject pillModel;
     public GameObject patientModel;
 
     [HideInInspector]
     public bool active;
     private int counter;
 
-    void Start() {
+    void Start()
+    {
 
         active = false;
         counter = 0;
         trigger.SetActive(false);
-        
+
     }
 
-    void FixedUpdate() {
-
-        if (!active) {
-            counter++;
-            int rand = Random.Range(0, 1000000);
-            if (rand < counter) {
-                counter = 0;
-                active = true;
-                trigger.SetActive(true);
+    void FixedUpdate()
+    {
+        if (patientModel != null)
+        {
+            if (!active)
+            {
+                counter++;
+                int rand = Random.Range(0, 1000000);
+                if (rand < counter)
+                {
+                    counter = 0;
+                    active = true;
+                    trigger.SetActive(true);
+                }
             }
+
+            pointer.SetActive(active);
+            pointer.transform.position = new Vector3(player.transform.position.x,
+                                             player.transform.position.y,
+                                             player.transform.position.z)
+                                         - DirectionToPlayer();
+
+            pillModel.SetActive(active);
         }
-
-        pointer.SetActive(active);
-        pointer.transform.position = new Vector3(player.transform.position.x,
-            player.transform.position.y,
-            player.transform.position.z)
-            - DirectionToPlayer();
-
-        patientModel.SetActive(active);
+        else
+        {
+            pillModel.SetActive(false);
+            pointer.SetActive(false);
+        }
     }
-    
-    public void stress() {
 
-        if (distanceToPlayer() < 3.0f) {
-            Stats.UpdateTime(30,false);
+    public void stress()
+    {
+
+        if (distanceToPlayer() < 3.0f)
+        {
+            Stats.UpdateTime(30, false);
             SceneManager.LoadScene("Minigame1");
         }
     }
 
-    public float distanceToPlayer() {
+    public float distanceToPlayer()
+    {
 
         return Mathf.Sqrt(
             Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) * Mathf.Abs(player.transform.position.x - gameObject.transform.position.x) + // a^2
@@ -60,7 +76,8 @@ public class StressorScript : MonoBehaviour {
         );
     }
 
-    private Vector3 DirectionToPlayer() {
+    private Vector3 DirectionToPlayer()
+    {
 
         Vector3 direction = new Vector3(player.transform.position.x - gameObject.transform.position.x,
             0,
