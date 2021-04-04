@@ -9,7 +9,7 @@ public class SurgeryGameLoop : MonoBehaviour
 {
     SurgeryState gameState;
 
-    float stateTime = 10f;
+    float stateTime = 999f;
     bool gameOver = false;
 
     GameObject[] incisionGuideLines;
@@ -39,6 +39,9 @@ public class SurgeryGameLoop : MonoBehaviour
     private bool oneCompleteIncision;
     private int incCompleted;//number of incinsion completed max 2
 
+    Vector3 IncisionPosition1;
+    Vector3 IncisionPosition2;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,6 +62,7 @@ public class SurgeryGameLoop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(incCompleted);
         stateTime -= Time.deltaTime;
         if (gameState == SurgeryState.Incision)
         {
@@ -67,16 +71,16 @@ public class SurgeryGameLoop : MonoBehaviour
             //    //CheckIncision(mouseInfo.lines[lineCount].GetComponent<LineRenderer>());
             //    //lineCount++;
             //}
-            if (Input.GetKeyUp(KeyCode.Mouse1))
+            /*if (Input.GetKeyUp(KeyCode.Mouse1))
             {
                 lineCount++;
-            }
+            }*/
             if (Input.GetKey(KeyCode.Mouse1))
             {
                 TrackIncision();
             }
             List<GameObject> line1 = mouseInfo.lines;
-            if (stateTime <= 0 || lineCount >= 2)
+            if (stateTime <= 0 || incCompleted >= 2)
             {
 
                 gameState = SurgeryState.Extraction;
@@ -201,7 +205,8 @@ public class SurgeryGameLoop : MonoBehaviour
         }
 
         incisionGuideLines[index] = Instantiate(incisionLinePrefab);
-
+        IncisionPosition1 = point1;
+        IncisionPosition2 = point2;
         incisionGuideLines[index].GetComponent<LineRenderer>().SetPositions(new Vector3[] { point1, point2 });
         incisionGuideLines[index].GetComponent<EdgeCollider2D>().SetPoints(new List<Vector2> { new Vector2(point1.x, point1.y), new Vector2(point2.x, point2.y) });
     }
@@ -299,10 +304,13 @@ public class SurgeryGameLoop : MonoBehaviour
         EdgeCollider2D targetCollider;
         LineRenderer targetLine;
         GameObject targetObj;
+
+        List<GameObject> tempIncisions = new List<GameObject>();
+        
         //this determines if the player has completed an incision in which case one of the lines will be gone leveing only 1
         if (oneCompleteIncision)
         {
-            
+            tempIncisions.Add(incisionGuideLines[0]);
             currPoint = mouseInfo.Held.transform.position;
             targetCollider = incisionGuideLines[0].GetComponent<EdgeCollider2D>();
             targetLine = incisionGuideLines[0].GetComponent<LineRenderer>();
@@ -310,6 +318,8 @@ public class SurgeryGameLoop : MonoBehaviour
         }
         else
         {
+            tempIncisions.Add(incisionGuideLines[0]);
+            tempIncisions.Add(incisionGuideLines[1]);
             currPoint = mouseInfo.Held.transform.position;
             targetCollider = incisionGuideLines[0].GetComponent<EdgeCollider2D>();
             targetLine = incisionGuideLines[0].GetComponent<LineRenderer>();
@@ -411,20 +421,44 @@ public class SurgeryGameLoop : MonoBehaviour
             }
             if (modifiedDistance <= distanceOfChosen)
             {
-                Debug.Log("Victory");
-                /*
+                //incCompleted++;
+
                 //onces a incision is completed it will delete it along with all the incisions the uses mad up until that point leaving only the last incision
                 //Debug.Log("Victory");
-                foreach (GameObject line in mouseInfo.lines)
+                
+                //once all thel ines are removed we must remove the incision as well to prevent confusion 
+                //first i will create a temp list that will be a copy of the incisionGuideLines array
+                
+                //than we determine what is the target object and remove it
+                if (targetObj = incisionGuideLines[0])
                 {
-                    mouseInfo.lines.Remove(line);
-                    Destroy(line);
+                    Destroy(incisionGuideLines[0]);
+                    tempIncisions.Remove(incisionGuideLines[0]);
+                    incCompleted++;
                 }
+                else if(targetObj = incisionGuideLines[1])
+                {
+                    Destroy(incisionGuideLines[1]);
+                    tempIncisions.Remove(incisionGuideLines[1]);
+                    incCompleted++;
+                }
+                /*for (int x = 0;x<mouseInfo.lines.Count;x++)
+                {
+                    mouseInfo.lines.Remove(mouseInfo.lines[x]);
+                    Destroy(mouseInfo.lines[x]);
+                }*/
+                /*foreach (GameObject line in mouseInfo.lines)
+                {
+                    Destroy(line);
+                    mouseInfo.lines.Remove(line);
+                }*/
+                //we than update our old array with the new shorter list
+                incisionGuideLines = tempIncisions.ToArray();
 
-                incisionGuideLines.Remove(targetObj);
-                Destroy(targetObj);
+                //and than we destroy the object
+               
                 oneCompleteIncision = true;//there are only 2 incisions 
-                incCompleted++;
+                
                 //we need to destory the current target*/
             }
 
