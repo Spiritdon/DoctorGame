@@ -18,8 +18,6 @@ public class SurgeryGameLoop : MonoBehaviour
     GameObject[] oldOrgans;
     GameObject[] organSpots;
 
-    int lineCount = 0;
-
     public GameObject incisionLinePrefab;
     public Transform[] organTraySpots;
     public GameObject organSpotPrefab;
