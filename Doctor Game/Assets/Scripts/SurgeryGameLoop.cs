@@ -36,12 +36,14 @@ public class SurgeryGameLoop : MonoBehaviour
 
     public SurgeryMouseControl mouseInfo;
 
-    private GameObject currentLine;
-    private GameObject targetIncision;
+    private bool oneCompleteIncision;
+    private int incCompleted;//number of incinsion completed max 2
 
     // Start is called before the first frame update
     void Start()
     {
+        incCompleted = 0;
+        oneCompleteIncision = false;// if thep layer has completed an incision
         oldOrgans = new GameObject[2];
         newOrgans = new GameObject[2];
         organSpots = new GameObject[2];
@@ -293,15 +295,33 @@ public class SurgeryGameLoop : MonoBehaviour
     {
         bool noLinesDrawn = true;
         GameObject chosenLine = new GameObject();
-        Vector3 currPoint = mouseInfo.Held.transform.position;
-        EdgeCollider2D targetCollider = incisionGuideLines[0].GetComponent<EdgeCollider2D>();
-        LineRenderer targetLine = incisionGuideLines[0].GetComponent<LineRenderer>();
-
-        float minDist = incisionGuideLines[0].GetComponent<EdgeCollider2D>().Distance(mouseInfo.Held.GetComponent<Collider2D>()).distance;
-        if (minDist > incisionGuideLines[1].GetComponent<EdgeCollider2D>().Distance(mouseInfo.Held.GetComponent<Collider2D>()).distance)
+        Vector3 currPoint;
+        EdgeCollider2D targetCollider;
+        LineRenderer targetLine;
+        GameObject targetObj;
+        //this determines if the player has completed an incision in which case one of the lines will be gone leveing only 1
+        if (oneCompleteIncision)
         {
-            targetCollider = incisionGuideLines[1].GetComponent<EdgeCollider2D>();
-            targetLine = incisionGuideLines[1].GetComponent<LineRenderer>();
+            
+            currPoint = mouseInfo.Held.transform.position;
+            targetCollider = incisionGuideLines[0].GetComponent<EdgeCollider2D>();
+            targetLine = incisionGuideLines[0].GetComponent<LineRenderer>();
+            targetObj = incisionGuideLines[0];
+        }
+        else
+        {
+            currPoint = mouseInfo.Held.transform.position;
+            targetCollider = incisionGuideLines[0].GetComponent<EdgeCollider2D>();
+            targetLine = incisionGuideLines[0].GetComponent<LineRenderer>();
+            targetObj = incisionGuideLines[0];
+
+            float minDist = incisionGuideLines[0].GetComponent<EdgeCollider2D>().Distance(mouseInfo.Held.GetComponent<Collider2D>()).distance;
+            if (minDist > incisionGuideLines[1].GetComponent<EdgeCollider2D>().Distance(mouseInfo.Held.GetComponent<Collider2D>()).distance)
+            {
+                targetCollider = incisionGuideLines[1].GetComponent<EdgeCollider2D>();
+                targetLine = incisionGuideLines[1].GetComponent<LineRenderer>();
+                targetObj = incisionGuideLines[1];
+            }
         }
 
         
@@ -392,11 +412,19 @@ public class SurgeryGameLoop : MonoBehaviour
             if (modifiedDistance <= distanceOfChosen)
             {
                 Debug.Log("Victory");
-                /*foreach (GameObject line in mouseInfo.lines)
+                /*
+                //onces a incision is completed it will delete it along with all the incisions the uses mad up until that point leaving only the last incision
+                //Debug.Log("Victory");
+                foreach (GameObject line in mouseInfo.lines)
                 {
                     mouseInfo.lines.Remove(line);
                     Destroy(line);
                 }
+
+                incisionGuideLines.Remove(targetObj);
+                Destroy(targetObj);
+                oneCompleteIncision = true;//there are only 2 incisions 
+                incCompleted++;
                 //we need to destory the current target*/
             }
 
