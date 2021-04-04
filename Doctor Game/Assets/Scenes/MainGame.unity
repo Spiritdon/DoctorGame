@@ -3526,6 +3526,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ff7704997af3ca468ea39420cfd35ec, type: 3}
+--- !u!1 &560108707 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5168907417705566383, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
+  m_PrefabInstance: {fileID: 883728974}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &568595624
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3990,6 +3995,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5460431057764878208, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
   m_PrefabInstance: {fileID: 1792643571}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &595264233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595264230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6553a50a750854c40a2f14606bd8b93f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patientWithBed: {fileID: 595264230}
+  patientObj: {fileID: 1721436803}
+  bedObj: {fileID: 669143613}
+  health: 6
 --- !u!4 &604615577 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1668377676570872333, guid: 9e1f35a0e9903524491da5e6f805a88a, type: 3}
@@ -4693,6 +4714,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 654348961}
   m_CullTransparentMesh: 1
+--- !u!1 &669143613 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5168907417705566383, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
+  m_PrefabInstance: {fileID: 1792643571}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &680996263
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7405,6 +7431,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c313b72ae95e4454901041fa86d8984, type: 3}
+--- !u!1 &1079239296 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5168907417705566383, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
+  m_PrefabInstance: {fileID: 926105176}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1086725481
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8002,6 +8033,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5460431057764878208, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
   m_PrefabInstance: {fileID: 883728974}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1147454830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147454827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6553a50a750854c40a2f14606bd8b93f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patientWithBed: {fileID: 1147454827}
+  patientObj: {fileID: 1681047643}
+  bedObj: {fileID: 560108707}
+  health: 6
 --- !u!1 &1151597445
 GameObject:
   m_ObjectHideFlags: 0
@@ -8101,6 +8148,11 @@ MeshFilter:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8231385366388270245, guid: d934ca7015370244895f3185bfcd318f, type: 3}
   m_PrefabInstance: {fileID: 514173496}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1169968204 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2785077014938490268, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
+  m_PrefabInstance: {fileID: 926105176}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1182399910
 PrefabInstance:
@@ -10160,6 +10212,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1866829943645071428, guid: 1a3dd7918547a9443b0ba995bb4c6422, type: 3}
   m_PrefabInstance: {fileID: 1477444324}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1477996689 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2785077014938490268, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
+  m_PrefabInstance: {fileID: 1992839044}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1493650990
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11252,6 +11309,11 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.99999994, y: 1.0000002, z: 0.20000005}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1593432531 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5168907417705566383, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
+  m_PrefabInstance: {fileID: 1992839044}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1595430777
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11941,6 +12003,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4996593761235138, guid: 683ef653b4b09b94993b7fd393c95978, type: 3}
   m_PrefabInstance: {fileID: 1785469756}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1681047643 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2785077014938490268, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
+  m_PrefabInstance: {fileID: 883728974}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1687588954 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4169218165427172, guid: 77b051a1cce5b4a36a8cca319997554d, type: 3}
@@ -12185,6 +12252,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1866829943645071428, guid: 1a3dd7918547a9443b0ba995bb4c6422, type: 3}
   m_PrefabInstance: {fileID: 1703088165}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1721436803 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2785077014938490268, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
+  m_PrefabInstance: {fileID: 1792643571}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1726060561
 GameObject:
   m_ObjectHideFlags: 0
@@ -12285,6 +12357,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5460431057764878208, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
   m_PrefabInstance: {fileID: 1992839044}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1733667563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1733667560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6553a50a750854c40a2f14606bd8b93f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patientWithBed: {fileID: 1733667560}
+  patientObj: {fileID: 1477996689}
+  bedObj: {fileID: 1593432531}
+  health: 3
 --- !u!1 &1741600966
 GameObject:
   m_ObjectHideFlags: 0
@@ -14642,6 +14730,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5460431057764878208, guid: 8b1ea3c39d31f0841b1309904fe17ac8, type: 3}
   m_PrefabInstance: {fileID: 926105176}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2134788795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134788792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6553a50a750854c40a2f14606bd8b93f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patientWithBed: {fileID: 2134788792}
+  patientObj: {fileID: 1169968204}
+  bedObj: {fileID: 1079239296}
+  health: 5
 --- !u!1001 &2137591402
 PrefabInstance:
   m_ObjectHideFlags: 0
