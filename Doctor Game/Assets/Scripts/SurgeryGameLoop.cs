@@ -32,8 +32,12 @@ public class SurgeryGameLoop : MonoBehaviour
     public Collider2D organTray;
     public Collider2D gameBounds;
 
+    public GameObject[] scapleIncisions;
+
     public SurgeryMouseControl mouseInfo;
 
+    private GameObject currentLine;
+    private GameObject targetIncision;
 
     // Start is called before the first frame update
     void Start()
@@ -69,9 +73,10 @@ public class SurgeryGameLoop : MonoBehaviour
             {
                 TrackIncision();
             }
-
+            List<GameObject> line1 = mouseInfo.lines;
             if (stateTime <= 0 || lineCount >= 2)
             {
+
                 gameState = SurgeryState.Extraction;
                 EnterState(0);
                 stateTime = 30f;
@@ -286,49 +291,122 @@ public class SurgeryGameLoop : MonoBehaviour
 
     void TrackIncision()
     {
+        bool noLinesDrawn = true;
+        GameObject chosenLine = new GameObject();
         Vector3 currPoint = mouseInfo.Held.transform.position;
         EdgeCollider2D targetCollider = incisionGuideLines[0].GetComponent<EdgeCollider2D>();
-        
+        LineRenderer targetLine = incisionGuideLines[0].GetComponent<LineRenderer>();
+
         float minDist = incisionGuideLines[0].GetComponent<EdgeCollider2D>().Distance(mouseInfo.Held.GetComponent<Collider2D>()).distance;
         if (minDist > incisionGuideLines[1].GetComponent<EdgeCollider2D>().Distance(mouseInfo.Held.GetComponent<Collider2D>()).distance)
         {
             targetCollider = incisionGuideLines[1].GetComponent<EdgeCollider2D>();
+            targetLine = incisionGuideLines[1].GetComponent<LineRenderer>();
         }
-
 
         
-        Debug.Log("Right Click Down and Inside");
-        if (!targetCollider.bounds.Contains(mouseInfo.Held.transform.position))
+        //Debug.Log("Right Click Down and Inside");
+        
+        if (mouseInfo.lines.Count == 0)
         {
-            StartCoroutine(SurgeryBotched());
-            gameOver = true;
-        }
-            //sorry tried to get both the box and the circle collider to determine if the player won did not work out
-            /*foreach (GameObject line in mouseInfo.lines)
-            {
-                Vector3[] scapleCutPostions = new Vector3[line.GetComponent<LineRenderer>().positionCount];
-                line.GetComponent<LineRenderer>().GetPositions(scapleCutPostions);
 
-                foreach (Vector3 scapleCut in scapleCutPostions)
+        }
+        else 
+        {
+            if (targetCollider.bounds.Contains(mouseInfo.lines[mouseInfo.lines.Count - 1].GetComponent<LineRenderer>().GetPosition(0)))
+            {
+                noLinesDrawn = false;
+                chosenLine = mouseInfo.lines[mouseInfo.lines.Count - 1];//the chosen line will always be the current line the chosen line must be within the the bounds
+                //chosenLine = mouseInfo.lines[0];
+            }
+        }
+
+        if (!noLinesDrawn)//determines if lines are drawn to prevent null exceptions
+        {
+            /*for (int x = 0; x < mouseInfo.lines.Count; x++)
+            {
+                GameObject tempLine = mouseInfo.lines[x];
+                if (targetCollider.bounds.Contains(tempLine.GetComponent<LineRenderer>().GetPosition(0)))
                 {
-                    bool circleHit = false;
-                    bool boxHit = false;
-                    if (incision.GetComponent<CircleCollider2D>().bounds.Contains(scapleCut))
+
+                    for (int y = 0;y<pastChosen.Count;y++)
                     {
-                        //Debug.Log("Circle Hit");
-                        circleHit = true;
-                    }
-                    if (incision.GetComponent<BoxCollider2D>().bounds.Contains(scapleCut))
-                    {
-                        //Debug.Log("Box Hit");
-                        boxHit = true;
-                    }
-                    if (boxHit ==true && circleHit == true)
-                    {
-                        Debug.Log("You Won :D");
+                        if (tempLine == pastChosen[y])
+                        {
+                            x++;
+                            continue;
+                        }
+                        else
+                        {
+                            pastChosen.Add(tempLine);
+                            chosenLine = tempLine;
+                            break;
+                        }
                     }
                 }
             }*/
+
+
+            /*foreach (GameObject line in mouseInfo.lines)
+            {
+                line.GetComponent<LineRenderer>();
+                if (targetCollider.bounds.Contains(line.GetComponent<LineRenderer>().GetPosition(0)))
+                {
+                    chosenLine = line;
+                }
+            }*/
+
+            int lastPosition = chosenLine.GetComponent<LineRenderer>().positionCount - 1;
+
+            Vector3 firstPoint = chosenLine.GetComponent<LineRenderer>().GetPosition(0);
+            Vector3 lastPoint = chosenLine.GetComponent<LineRenderer>().GetPosition(lastPosition);
+            float distanceOfChosen = Vector3.Distance(firstPoint, lastPoint);
+
+
+            int lastIncisionPosition = targetLine.GetComponent<LineRenderer>().positionCount - 1;
+
+            Vector3 incisionFirstPoint = targetLine.GetComponent<LineRenderer>().GetPosition(0);
+            Vector3 incisionLastPoint = targetLine.GetComponent<LineRenderer>().GetPosition(lastIncisionPosition);
+            float distanceOfTarget = Vector3.Distance(incisionFirstPoint, incisionLastPoint);
+
+            float modifiedDistance = distanceOfTarget - 0.5f;
+
+            //Debug.Log(distanceOfChosen);
+
+            //than we are going to check if every point is within the the bounds if not the player loses
+            /*for (int x = 0; x < chosenLine.GetComponent<LineRenderer>().positionCount; x++)//this is possibly going to be expensive
+            {
+                Vector3[] chosenPoints = new Vector3[10];
+                chosenLine.GetComponent<LineRenderer>().GetPositions(chosenPoints);
+                if (!targetCollider.bounds.Contains(chosenPoints[x]))
+                {
+                    StartCoroutine(SurgeryBotched());
+                    gameOver = true;
+                }
+            }*/
+            if (!targetCollider.bounds.Contains(mouseInfo.Held.transform.position))
+            {
+                StartCoroutine(SurgeryBotched());
+                gameOver = true;
+            }
+            if (modifiedDistance <= distanceOfChosen)
+            {
+                Debug.Log("Victory");
+                /*foreach (GameObject line in mouseInfo.lines)
+                {
+                    mouseInfo.lines.Remove(line);
+                    Destroy(line);
+                }
+                //we need to destory the current target*/
+            }
+
+
+        }
+        else
+        {
+
+        }
+        
     }
 
     void UpdateUI()
