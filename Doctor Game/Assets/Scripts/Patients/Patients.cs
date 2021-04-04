@@ -47,8 +47,8 @@ public class Patients : MonoBehaviour
                     bedObj.GetComponent<Renderer>().material.color = Color.blue;
                 }
             }
-        }
 
-        healthBar.GetComponentInChildren<HealthBar>().SetHealth(health);
+            healthBar.GetComponentInChildren<HealthBar>().SetHealth(health);
+        }
     }
 }
