@@ -34,10 +34,6 @@ public class StressorScript : MonoBehaviour {
             }
         }
 
-        /*if (active) {
-            health -= 0.1f;
-        }*/
-
         pointer.SetActive(active);
         pointer.transform.position = new Vector3(player.transform.position.x,
             player.transform.position.y,
