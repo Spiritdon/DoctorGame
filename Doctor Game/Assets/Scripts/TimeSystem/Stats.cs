@@ -175,7 +175,7 @@ public static class Stats
                     stamina -= 0.5f;
                 }
             }
-            else if(isRelaxing && outOfStamina <=0)
+            else if (isRelaxing && outOfStamina <= 0 && stressReleaseLimit <= 3)
             {
                 stamina += 0.5f;
             }
@@ -191,7 +191,6 @@ public static class Stats
             stamina = 5;
             outOfStamina = 0;
         }
-
 
         timeLabel.GetComponent<Text>().text = "Time" + "\n" + Hour.ToString();
         dayLabel.GetComponent<Text>().text = "Day" + "\n" + Day.ToString();
