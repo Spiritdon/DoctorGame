@@ -15,14 +15,13 @@ public class Patients : MonoBehaviour
     {
         if (patientWithBed.GetComponent<Patients>().healthBar != null)
         {
-            Debug.Log("1");
             DontDestroyOnLoad(patientWithBed);
         }
         else
         {
             cDay = 1;
             healthBar = Resources.Load("HealthBarCanvas") as GameObject;
-            healthBar = Instantiate(healthBar, new Vector3(patientWithBed.transform.position.x, patientWithBed.transform.position.y + 10, patientWithBed.transform.position.z + 1.5f), Quaternion.identity);
+            healthBar = Instantiate(healthBar, new Vector3(patientWithBed.transform.position.x, patientWithBed.transform.position.y + 5, patientWithBed.transform.position.z + 1.2f), Quaternion.identity);
         }
     }
 
@@ -34,7 +33,15 @@ public class Patients : MonoBehaviour
             if (Stats.Day != cDay)
             {
                 cDay++;
-                health--;
+                if (Stats.HoursWorked <= 6)
+                {
+                    health--;
+                }
+                else
+                {
+                    health++;
+                }
+
 
                 if (health == 0)
                 {
@@ -48,7 +55,10 @@ public class Patients : MonoBehaviour
                 }
             }
 
-            healthBar.GetComponentInChildren<HealthBar>().SetHealth(health);
+            if (healthBar != null)
+            {
+                healthBar.GetComponentInChildren<HealthBar>().SetHealth(health);
+            }
         }
     }
 }

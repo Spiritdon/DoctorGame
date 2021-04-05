@@ -9,6 +9,7 @@ public static class Stats
     private static int day = 1;
     private static int min = 0;
     private static float hour = 8;
+    private static float hoursWorked = 0;
     private static float stamina = 5;
     private static float outOfStamina = 0;
     private static float stress = 0;
@@ -178,6 +179,18 @@ public static class Stats
         }
     }
 
+    public static float HoursWorked
+    {
+        get
+        {
+            return hoursWorked;
+        }
+        set
+        {
+            hoursWorked = value;
+        }
+    }
+
     public static void UpdateTime(int timeCost, bool isRelaxing)
     {
         dayLabel = GameObject.Find("DayLabel");
@@ -201,6 +214,7 @@ public static class Stats
 
             if (!isRelaxing)
             {
+                hoursWorked += 0.5f;
                 if (stamina <= 0)
                 {
                     OutOfStamina += 0.5f;
@@ -231,6 +245,7 @@ public static class Stats
         {
             Day += 1;
             Hour = 8;
+            hoursWorked = 0;
             stressReleaseLimit = 0;
             stamina = 5;
             outOfStamina = 0;

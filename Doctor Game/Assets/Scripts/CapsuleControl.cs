@@ -19,20 +19,20 @@ public class CapsuleControl : MonoBehaviour
     {
         pointCounter = 0;
         badCounter = 0;
-       
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        goodPillCounter.text = "Number Of Pill Collected:  " + pointCounter.ToString()+"/10";
-        badPillCounter.text = "Number Of Bad Pill Collected:  " + badCounter.ToString()+"/3";
+        goodPillCounter.text = "Number Of Pill Collected:  " + pointCounter.ToString() + "/10";
+        badPillCounter.text = "Number Of Bad Pill Collected:  " + badCounter.ToString() + "/3";
         Debug.Log("Point Counter:" + pointCounter);
-        
-        if (gameObject.transform.position.x<1276&& gameObject.transform.position.x > 660)
+
+        if (gameObject.transform.position.x < 1276 && gameObject.transform.position.x > 660)
         {
             transform.position += new Vector3((Input.GetAxis("Horizontal") * Time.deltaTime) * 500, 0, 0);
-            
+
         }
         if (gameObject.transform.position.x >= 1276)
         {
@@ -66,13 +66,13 @@ public class CapsuleControl : MonoBehaviour
             badCounter++;
             pillSpawner.CollectPill(collision.gameObject);
         }
-        if(collision.gameObject.tag == "goodPill")
+        if (collision.gameObject.tag == "goodPill")
         {
             pillCollect.Play();
             pointCounter++;
-            
+
             pillSpawner.CollectPill(collision.gameObject);
-            
+
         }
         if (badCounter == 3)
         {
