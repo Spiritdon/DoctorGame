@@ -9,7 +9,7 @@ public class SurgeryGameLoop : MonoBehaviour
 {
     SurgeryState gameState;
 
-    float stateTime = 999f;
+    float stateTime = 20f;
     bool gameOver = false;
 
     GameObject[] incisionGuideLines;
